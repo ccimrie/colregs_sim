@@ -1,0 +1,16 @@
+TT: 10000
+results directory: ../colregs_sim/results/
+agents:
+  agent 0:
+    N: 20
+    yaml file: ../colregs_sim/yaml_files/agents/lane_0_agent.yaml
+  agent 1:
+    N: 20
+    yaml file: ../colregs_sim/yaml_files/agents/lane_1_agent.yaml
+  agent 2:
+    N: 1
+    yaml file: ../colregs_sim/yaml_files/agents/bad_agent.yaml
+ # For testing head on scenarios
+  # agent 3:
+  #   N: 1
+  #   yaml file: ../colregs_sim/yaml_files/agents/opposite_headon_agent.yaml

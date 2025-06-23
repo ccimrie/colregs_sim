@@ -1,0 +1,33 @@
+initial pose:
+  x: 
+    min: 0.0
+    max: 0.0
+  y: 
+    min: 100.0
+    max: 100.0
+  theta:
+    min: -90
+    max: -90
+size: 
+  max: 2.5
+  min: 2.5
+vel-size ratio: 
+  linear: 2.0
+  angular: 1.0
+range-size ratio: 9.0
+goal pose:
+  x:
+    target: 0.0
+    tolerance: 2.0
+  y: 
+    target: -38.0
+    tolerance: 2.0
+forbidden zones:
+  zone 0:
+    x:
+      min: -1000
+      max: 1000
+    y:
+      min: 0
+      max: 10
+agent type: 3

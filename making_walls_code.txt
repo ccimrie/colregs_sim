@@ -1,0 +1,32 @@
+   // Define the ground body.
+    // b2BodyDef groundBodyDef;
+    // b2BodyDef leftBodyDef;
+    // b2BodyDef rightBodyDef;
+    // b2BodyDef ceilingBodyDef;
+
+    // groundBodyDef.position.Set(0.0f, BOTTOM-5.0f);
+    // leftBodyDef.position.Set(LEFT-5.0f, 0.0f);
+    // rightBodyDef.position.Set(RIGHT+5.0f, 0.0f);
+    // ceilingBodyDef.position.Set(0.0f, TOP+5.0f);
+
+    // Call the body factory which allocates memory for the ground body
+    // from a pool and creates the ground box shape (also from a pool).
+    // The body is also added to the world.
+    // b2Body* groundBody = world.CreateBody(&groundBodyDef);
+    // b2Body* leftBody = world.CreateBody(&leftBodyDef);
+    // b2Body* rightBody = world.CreateBody(&rightBodyDef);
+    // b2Body* ceilingBody = world.CreateBody(&ceilingBodyDef);
+
+    // Define the ground box shape.
+    // b2PolygonShape groundCeilingBox;
+    // b2PolygonShape leftRightBox;
+
+    // // The extents are the half-widths of the box.
+    // groundCeilingBox.SetAsBox(5.0f, 5.0f);
+    // leftRightBox.SetAsBox(5.0f, 5.0f);
+
+    // // Add the ground fixture to the ground body.
+    // groundBody->CreateFixture(&groundCeilingBox, 0.0f);
+    // ceilingBody->CreateFixture(&groundCeilingBox, 0.0f);
+    // leftBody->CreateFixture(&leftRightBox, 0.0f);
+    // rightBody->CreateFixture(&leftRightBox, 0.0f);
