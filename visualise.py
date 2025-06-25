@@ -16,9 +16,10 @@ fig, ax, ax_zoom, ax_lines, agent_deployed_info, agent_waiting_info, TT=setupAxe
 def animate(t):
     if t==0:
         plt.waitforbuttonpress()
-    if t%100==0:
-        print(t*speed)
-
+    if t%10==0:
+        print(f"{t*speed}/{int(TT)}")
+    # if t==(int(TT/speed)):
+    #     print("DONE")
     updates=[]
 
   ## Check if new agents needs to be added

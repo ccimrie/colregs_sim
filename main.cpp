@@ -7,12 +7,16 @@
 #include <string.h>
 #include <fstream>
 #include <stdlib.h>
-#include <agent.h>
+// #include <agent.h>
+#include <mass_agent.h>
+#include <normal_agent.h>
 // #include "agent_quad.h"
 // #include "quad_tree.h"
 
 #define PI 3.14159265
 #define THRESH 0.25
+
+using namespace std;
 
 double betaVary=0.01425;
 double dense=1.0;
@@ -37,13 +41,60 @@ b2Body* defineBody(b2Body* particle, double radius, double density, double frict
   return particle;
 }
 
-using namespace std;
+
+void setGoal(agent* ego, vector<vector<double>> goals, int selection)
+{
+  ego->setTarget(goals[selection][0], goals[selection][2], goals[selection][1], goals[selection][2]);
+}
+
+
+void checkNeigh(NormalAgent* ego, agent* neigh)
+{
+  double pos_x=ego->getBody()->GetPosition().x;
+  double pos_y=ego->getBody()->GetPosition().y;
+  double MASS_range=ego->getRange();
+  double vel_mag=ego->getMaxVel();
+
+  double other_pos_x=neigh->getBody()->GetPosition().x;
+  double other_pos_y=neigh->getBody()->GetPosition().y;
+  double other_vel_mag=neigh->getVelMag();
+
+  double dist_x=pos_x-other_pos_x;
+  double dist_y=pos_y-other_pos_y;
+  double dist=sqrt(dist_x*dist_x+dist_y*dist_y);
+  double closest_dist_point=dist-neigh->getRadius();
+  if (closest_dist_point<MASS_range) ego->updateVel(neigh);
+}
+
+
+void checkNeighMass(MassAgent* ego, agent* neigh)
+{
+  double pos_x=ego->getBody()->GetPosition().x;
+  double pos_y=ego->getBody()->GetPosition().y;
+  double MASS_range=ego->getRange();
+  double vel_mag=ego->getMaxVel();
+
+  double other_pos_x=neigh->getBody()->GetPosition().x;
+  double other_pos_y=neigh->getBody()->GetPosition().y;
+  double other_vel_mag=neigh->getVelMag();
+
+  double dist_x=pos_x-other_pos_x;
+  double dist_y=pos_y-other_pos_y;
+  double dist=sqrt(dist_x*dist_x+dist_y*dist_y);
+  double closest_dist_point=dist-neigh->getRadius();
+  if (closest_dist_point<MASS_range) ego->updateNeighPF(neigh);
+}
+
 
 int main(int argc, const char* argv[])
 {  
   // Parameters from input args
     string yaml_file(argv[1]);
     YAML::Node config = YAML::LoadFile(yaml_file);
+    string goal_yaml_file=config["goal file"].as<string>();
+    // cout << goal_yaml_file << endl;
+    YAML::Node goal_config=YAML::LoadFile(goal_yaml_file);
+
     const int TT=config["TT"].as<int>();
     const string results_dir=config["results directory"].as<string>();
 
@@ -58,7 +109,8 @@ int main(int argc, const char* argv[])
     b2World world(gravity);
 
    // Define the dynamic body. We set its position and call the body factory.
-    std::vector<std::vector<agent>> MASS; // Particles movement/dynamics in physical space
+    // std::vector<std::vector<NormalAgent>> MASS; // Particles movement/dynamics in physical space
+    std::vector<NormalAgent> MASS;
     std::vector<int> MASS_pops;
     std::vector<string> MASS_keys;
     std::uniform_real_distribution<double> distribution_seeds(0, 10000000);
@@ -66,8 +118,24 @@ int main(int argc, const char* argv[])
     std::default_random_engine gen;
     gen.seed(time(NULL));
 
+    vector<vector<double>> goal_locations;
+
+    YAML::Node goals=goal_config["goals"];
+    for(YAML::const_iterator it=goals.begin(); it!=goals.end(); ++it)
+    {
+      std::string key=it->first.as<std::string>();
+      double goal_x=goal_config["goals"][key]["x"].as<double>();
+      double goal_y=goal_config["goals"][key]["y"].as<double>();
+      double tolerance=goal_config["goals"][key]["tolerance"].as<double>();
+      vector<double> new_goal={goal_x, goal_y, tolerance};
+      goal_locations.push_back(new_goal);
+    }
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> choice(0,goal_locations.size()-1);
+
     YAML::Node agents=config["agents"];
-    
+
     printf("Loaded scenario config\n");
     printf("Creating agents\n");
     for(YAML::const_iterator it=agents.begin(); it!=agents.end(); ++it)
@@ -77,25 +145,42 @@ int main(int argc, const char* argv[])
       // cTypeList.push_back(it->second.as<CharacterType>()); // <- value
       int N=config["agents"][key]["N"].as<int>();
       string agent_yaml_file=config["agents"][key]["yaml file"].as<string>();
-      MASS.push_back(std::vector<agent>(0));
+      // MASS.push_back(std::vector<NormalAgent>(0));
       for (int n=0; n<N; ++n)
       {
           string filename=key+"_"+to_string(n)+".txt";
           string results_file=results_dir+filename;
           double seed=distribution_seeds(gen);
-          MASS.back().push_back(agent(agent_yaml_file, results_file, seed));
-          // printf("Created agent\n");
-          // agent temp_agent(agent_yaml_file, results_file);
-          b2BodyDef temp_body=MASS.back().back().getBodyDef();
-          // printf("Created temp body\n");
-          MASS.back().back().setBody(world.CreateBody(&temp_body));
-          // printf("Created body with radius:  %f\n", MASS.back().getRadius());
-          MASS.back().back().setBody(defineBody(MASS.back().back().getBody(), MASS.back().back().getRadius(), 40, 0.3));
+          MASS.push_back(NormalAgent(agent_yaml_file, results_file, seed));
+
+          int start_loc=choice(dev);
+
+          double init_x=goal_locations[start_loc][0]+(1-2*drand48())*goal_locations[start_loc][2];
+          double init_y=goal_locations[start_loc][1]+(1-2*drand48())*goal_locations[start_loc][2];
+          double init_theta=(1-2*drand48())*PI;
+
+          MASS.back().setBodyDefPose(init_x, init_y, init_theta);
+
+          setGoal(&MASS.back(), goal_locations, choice(dev));
+
+          b2BodyDef temp_body=MASS.back().getBodyDef();
+          MASS.back().setBody(world.CreateBody(&temp_body));
+          MASS.back().setBody(defineBody(MASS.back().getBody(), MASS.back().getRadius(), 40, 0.3));
       }
-      // MASS.push_back(temp_MASS);
       MASS_pops.push_back(N);
     }
 
+   // Create MASS agent
+    string mass_yaml_file=config["mass agent"]["yaml file"].as<string>();
+    string mass_results_file=results_dir+config["mass agent"]["results file"].as<string>();
+    double mass_seed=distribution_seeds(gen);
+    double goal_weight=1.0;
+    double neigh_weight=1.0;
+    MassAgent mass(mass_yaml_file, mass_results_file, mass_seed, goal_weight, neigh_weight);
+    b2BodyDef mass_temp_body=mass.getBodyDef();
+    mass.setBody(world.CreateBody(&mass_temp_body));
+    int goal_ind=choice(dev);
+    setGoal(&mass, goal_locations, goal_ind);
    // Define simulation parameters
     // Prepare for simulation. Typically we use a time step of 1/60 of a
     // second (60Hz) and 10 iterations. This provides a high quality simulation
@@ -110,8 +195,7 @@ int main(int argc, const char* argv[])
 
     int overall_counter=0;
 
-   // Run simulation
-   
+   // Run simulation 
     for (int32 t=0; t<TT; ++t)
     {
         if (t%500==0) printf("%i\n", t);
@@ -122,93 +206,45 @@ int main(int argc, const char* argv[])
         // 3. Record New position
 
        // Calculate new velocity commands
-        // for (int n=0; n<N; ++n)
-        vector<vector<agent>>::iterator it_pops=MASS.begin();
-        int pop_counter=0;
-        for(it_pops; it_pops!=MASS.end(); ++it_pops)
+        vector<NormalAgent>::iterator it_ego=MASS.begin();
+        for(it_ego; it_ego!=MASS.end(); ++it_ego)
         {
-         // Repopulate agents if some have been removed
-          while(it_pops->size()<MASS_pops[pop_counter])
-          {
-            // string filename=key+"_"+to_string(MASS_pops[pop_counter][1])+".txt";
-            std::string key=MASS_keys[pop_counter];         // <- key
-            string agent_yaml_file=config["agents"][key]["yaml file"].as<string>();
-            string filename="mass_"+to_string(overall_counter)+".txt";
-            ++overall_counter;
-            // ++MASS_pops[pop_counter][1];
-            string results_file=results_dir+filename;
-            double seed=distribution_seeds(gen);
-            it_pops->push_back(agent(agent_yaml_file, results_file, seed));
-            b2BodyDef temp_body=it_pops->back().getBodyDef();
-            it_pops->back().setBody(world.CreateBody(&temp_body));
-            it_pops->back().setBody(defineBody(it_pops->back().getBody(), it_pops->back().getRadius(), 40, 0.3));
-          }
-          ++pop_counter;
+          bool reached_goal=it_ego->checkGoal();
 
-          // vector<agent>::iterator it_ego=MASS.begin();
-          vector<agent>::iterator it_ego=it_pops->begin();
-          while(it_ego!=it_pops->end())
-          {
-            // b2Vec2 lin_velocity;
-            // double ang_velocity;
-            bool reached_goal=it_ego->checkGoal();
-
-            if(reached_goal) 
-            {
-              it_pops->erase(it_ego);
-            }
-            else
-            { 
-              double pos_x=it_ego->getBody()->GetPosition().x;
-              double pos_y=it_ego->getBody()->GetPosition().y;
-
-              double MASS_range=it_ego->getRange();
-              double vel_mag=it_ego->getMaxVel();
-
-              vector<vector<agent>>::iterator it_pops_neigh=MASS.begin();
-              for(it_pops_neigh; it_pops_neigh!=MASS.end(); ++it_pops_neigh)
-              {
-                for (vector<agent>::iterator it_neigh=it_pops_neigh->begin(); it_neigh!=it_pops_neigh->end(); ++it_neigh)
-                {
-                  if (it_neigh!=it_ego)
-                  {
-                    double other_pos_x=it_neigh->getBody()->GetPosition().x;
-                    double other_pos_y=it_neigh->getBody()->GetPosition().y;
-                    double other_vel_mag=it_neigh->getVelMag();
-                    // double other_radius=it_neigh->getRadius();
-                    // double other_theta=it_neigh->getBody() ->GetAngle( )*(PI/180);
-                    double dist_x=pos_x-other_pos_x;
-                    double dist_y=pos_y-other_pos_y;
-                    double dist=sqrt(dist_x*dist_x+dist_y*dist_y);
-                    double closest_dist_point=dist-it_neigh->getRadius();
-                    // if (closest_dist_point<MASS_range) it_ego->updateVel(other_pos_x-pos_x, other_pos_y-pos_y, other_vel_mag, dist, other_radius, other_theta);
-                    if (closest_dist_point<MASS_range) it_ego->updateVel(&*it_neigh);
-                  }
-                }
-              }
-              ++it_ego;
-            }
-          }
+          if(reached_goal) setGoal(&*it_ego, goal_locations, choice(dev));
+          vector<NormalAgent>::iterator it_neigh=MASS.begin();
+          for (it_neigh; it_neigh!=MASS.end(); ++it_neigh) if (it_neigh!=it_ego) checkNeigh(&*it_ego, &*it_neigh);
+          checkNeigh(&*it_ego, &mass);
         }
- 
-       // Update with new velocity commands
-        it_pops=MASS.begin();
-        for(it_pops; it_pops!=MASS.end(); ++it_pops)
-        {
-          for(vector<agent>::iterator it_ego=it_pops->begin(); it_ego!=it_pops->end(); ++it_ego)
-          {
-            // Update the robot's heading
-            // Update robot's velocity
-            it_ego->updateVelMag();
-            it_ego->updateTheta();
 
-            double ang_velocity=(it_ego->getThetaAcc()*180.0)/PI;
-            b2Vec2 lin_velocity;
-            lin_velocity.Set(it_ego->getVelX(), it_ego->getVelY());
-            
-            it_ego->getBody()->SetLinearVelocity(lin_velocity);
-            it_ego->getBody()->SetAngularVelocity(ang_velocity);
-          }
+        if (mass.checkGoal()) setGoal(&mass, goal_locations, choice(dev));
+        vector<NormalAgent>::iterator it_neigh=MASS.begin();
+        for (it_neigh; it_neigh!=MASS.end(); ++it_neigh) checkNeighMass(&mass, &*it_neigh);
+        // Update the robot's heading
+        // Update robot's velocity
+        mass.updateVel();
+        double mass_ang_velocity=(mass.getThetaAcc()*180.0)/PI;
+        b2Vec2 mass_lin_velocity;
+        mass_lin_velocity.Set(mass.getVelX(), mass.getVelY());
+        
+        mass.getBody()->SetLinearVelocity(mass_lin_velocity);
+        mass.getBody()->SetAngularVelocity(mass_ang_velocity);
+
+       // Update with new velocity commands
+        it_ego=MASS.begin();
+        for(it_ego; it_ego!=MASS.end(); ++it_ego)
+        {
+          // Update the robot's heading
+          // Update robot's velocity
+          it_ego->updateVelMag();
+          it_ego->updateTheta();
+
+          double ang_velocity=(it_ego->getThetaAcc()*180.0)/PI;
+          b2Vec2 lin_velocity;
+          lin_velocity.Set(it_ego->getVelX(), it_ego->getVelY());
+          
+          it_ego->getBody()->SetLinearVelocity(lin_velocity);
+          it_ego->getBody()->SetAngularVelocity(ang_velocity);
         }
 
         // Instruct the world to perform a single step of simulation.
@@ -216,15 +252,14 @@ int main(int argc, const char* argv[])
         world.Step(timeStep, velocityIterations, positionIterations);
 
         // Now print the position and angle of the body.
-        it_pops=MASS.begin();
-        for(it_pops; it_pops!=MASS.end(); ++it_pops)
-        {
-          for(vector<agent>::iterator it_ego=it_pops->begin(); it_ego!=it_pops->end(); ++it_ego) it_ego->recordStep(t);
-        }
+        it_ego=MASS.begin();
+        for(it_ego; it_ego!=MASS.end(); ++it_ego) it_ego->recordStep(t);
+        mass.recordStep(t);
     }
    
     // When the world destructor is called, all bodies and joints are freed. This can
     // create orphaned pointers, so be careful about your world management.
 
     return 0;
+
 }

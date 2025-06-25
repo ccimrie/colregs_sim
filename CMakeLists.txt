@@ -1,6 +1,8 @@
 set (SOURCE_FILES
 	main.cpp
 	agent.cpp
+    normal_agent.cpp
+    mass_agent.cpp
 )
 
 find_package(PythonLibs REQUIRED)

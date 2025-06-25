@@ -100,22 +100,54 @@ colregs_sim/CMakeFiles/mass_colregs.dir/agent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mass_colregs.dir/agent.cpp.s"
 	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cci502/software/box2d-master/colregs_sim/agent.cpp -o CMakeFiles/mass_colregs.dir/agent.cpp.s
 
+colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/flags.make
+colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o: colregs_sim/normal_agent.cpp
+colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o -MF CMakeFiles/mass_colregs.dir/normal_agent.cpp.o.d -o CMakeFiles/mass_colregs.dir/normal_agent.cpp.o -c /home/cci502/software/box2d-master/colregs_sim/normal_agent.cpp
+
+colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mass_colregs.dir/normal_agent.cpp.i"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cci502/software/box2d-master/colregs_sim/normal_agent.cpp > CMakeFiles/mass_colregs.dir/normal_agent.cpp.i
+
+colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mass_colregs.dir/normal_agent.cpp.s"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cci502/software/box2d-master/colregs_sim/normal_agent.cpp -o CMakeFiles/mass_colregs.dir/normal_agent.cpp.s
+
+colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/flags.make
+colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o: colregs_sim/mass_agent.cpp
+colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o -MF CMakeFiles/mass_colregs.dir/mass_agent.cpp.o.d -o CMakeFiles/mass_colregs.dir/mass_agent.cpp.o -c /home/cci502/software/box2d-master/colregs_sim/mass_agent.cpp
+
+colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mass_colregs.dir/mass_agent.cpp.i"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cci502/software/box2d-master/colregs_sim/mass_agent.cpp > CMakeFiles/mass_colregs.dir/mass_agent.cpp.i
+
+colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mass_colregs.dir/mass_agent.cpp.s"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cci502/software/box2d-master/colregs_sim/mass_agent.cpp -o CMakeFiles/mass_colregs.dir/mass_agent.cpp.s
+
 # Object files for target mass_colregs
 mass_colregs_OBJECTS = \
 "CMakeFiles/mass_colregs.dir/main.cpp.o" \
-"CMakeFiles/mass_colregs.dir/agent.cpp.o"
+"CMakeFiles/mass_colregs.dir/agent.cpp.o" \
+"CMakeFiles/mass_colregs.dir/normal_agent.cpp.o" \
+"CMakeFiles/mass_colregs.dir/mass_agent.cpp.o"
 
 # External object files for target mass_colregs
 mass_colregs_EXTERNAL_OBJECTS =
 
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/agent.cpp.o
+bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o
+bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/build.make
 bin/mass_colregs: bin/libbox2d.a
 bin/mass_colregs: /usr/lib/x86_64-linux-gnu/libpython3.9.so
 bin/mass_colregs: /usr/lib/x86_64-linux-gnu/libyaml-cpp.so.0.6.2
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../bin/mass_colregs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../bin/mass_colregs"
 	cd /home/cci502/software/box2d-master/colregs_sim && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mass_colregs.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

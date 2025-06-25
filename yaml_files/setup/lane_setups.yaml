@@ -1,16 +1,20 @@
-TT: 10000
+TT: 100000
+goal file: ../colregs_sim/yaml_files/setup/goal_locations.yaml
 results directory: ../colregs_sim/results/
 agents:
   agent 0:
-    N: 20
+    N: 10
     yaml file: ../colregs_sim/yaml_files/agents/lane_0_agent.yaml
-  agent 1:
-    N: 20
-    yaml file: ../colregs_sim/yaml_files/agents/lane_1_agent.yaml
-  agent 2:
-    N: 1
-    yaml file: ../colregs_sim/yaml_files/agents/bad_agent.yaml
+  # agent 1:
+  #   N: 20
+  #   yaml file: ../colregs_sim/yaml_files/agents/lane_1_agent.yaml
+  # agent 2:
+  #   N: 1
+  #   yaml file: ../colregs_sim/yaml_files/agents/bad_agent.yaml
  # For testing head on scenarios
   # agent 3:
   #   N: 1
   #   yaml file: ../colregs_sim/yaml_files/agents/opposite_headon_agent.yaml
+mass agent:
+  yaml file: ../colregs_sim/yaml_files/agents/mass_agent.yaml
+  results file: mass_output.txt

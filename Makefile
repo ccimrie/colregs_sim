@@ -223,6 +223,54 @@ main.cpp.s:
 	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+mass_agent.o: mass_agent.cpp.o
+.PHONY : mass_agent.o
+
+# target to build an object file
+mass_agent.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o
+.PHONY : mass_agent.cpp.o
+
+mass_agent.i: mass_agent.cpp.i
+.PHONY : mass_agent.i
+
+# target to preprocess a source file
+mass_agent.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.i
+.PHONY : mass_agent.cpp.i
+
+mass_agent.s: mass_agent.cpp.s
+.PHONY : mass_agent.s
+
+# target to generate assembly for a file
+mass_agent.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.s
+.PHONY : mass_agent.cpp.s
+
+normal_agent.o: normal_agent.cpp.o
+.PHONY : normal_agent.o
+
+# target to build an object file
+normal_agent.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o
+.PHONY : normal_agent.cpp.o
+
+normal_agent.i: normal_agent.cpp.i
+.PHONY : normal_agent.i
+
+# target to preprocess a source file
+normal_agent.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.i
+.PHONY : normal_agent.cpp.i
+
+normal_agent.s: normal_agent.cpp.s
+.PHONY : normal_agent.s
+
+# target to generate assembly for a file
+normal_agent.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.s
+.PHONY : normal_agent.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -242,6 +290,12 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... mass_agent.o"
+	@echo "... mass_agent.i"
+	@echo "... mass_agent.s"
+	@echo "... normal_agent.o"
+	@echo "... normal_agent.i"
+	@echo "... normal_agent.s"
 .PHONY : help
 
 

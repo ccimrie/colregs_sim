@@ -1,57 +1,43 @@
-colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
- /home/cci502/software/box2d-master/colregs_sim/main.cpp \
- /usr/include/stdc-predef.h \
- /home/cci502/software/box2d-master/src/../include/box2d/box2d.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_settings.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_types.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_api.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/stdarg.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/stdint.h /usr/include/stdint.h \
+colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o: \
+ /home/cci502/software/box2d-master/colregs_sim/normal_agent.cpp \
+ /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/timesize.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
  /usr/include/x86_64-linux-gnu/bits/time64.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_common.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h /usr/include/assert.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/float.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_draw.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_math.h \
- /usr/include/c++/9/math.h /usr/include/c++/9/cmath \
+ /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+ /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+ /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/c++/9/stdlib.h /usr/include/c++/9/cstdlib \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h \
- /usr/include/c++/9/bits/cpp_type_traits.h \
- /usr/include/c++/9/ext/type_traits.h /usr/include/math.h \
- /usr/include/x86_64-linux-gnu/bits/math-vector.h \
- /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+ /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
- /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
- /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
- /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
- /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
- /usr/include/c++/9/bits/std_abs.h /usr/include/stdlib.h \
- /usr/include/x86_64-linux-gnu/bits/waitflags.h \
- /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/timer_t.h /usr/include/endian.h \
+ /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-intn.h /usr/include/endian.h \
  /usr/include/x86_64-linux-gnu/bits/endian.h \
  /usr/include/x86_64-linux-gnu/bits/endianness.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
@@ -68,54 +54,29 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_timer.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_chain_shape.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_shape.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_collision.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/syslimits.h \
- /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
- /usr/include/x86_64-linux-gnu/bits/local_lim.h \
- /usr/include/linux/limits.h \
- /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
- /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
- /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_circle_shape.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_edge_shape.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_polygon_shape.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_broad_phase.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_dynamic_tree.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_growable_stack.h \
- /usr/include/string.h /usr/include/strings.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_body.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_contact.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_fixture.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_time_step.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_world.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_block_allocator.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_contact_manager.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_stack_allocator.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_world_callbacks.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_distance_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_friction_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_gear_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_motor_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_mouse_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_prismatic_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_pulley_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_revolute_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_weld_joint.h \
- /home/cci502/software/box2d-master/src/../include/box2d/b2_wheel_joint.h \
- /usr/include/yaml-cpp/yaml.h /usr/include/yaml-cpp/parser.h \
+ /usr/include/c++/9/bits/std_abs.h /usr/include/c++/9/math.h \
+ /usr/include/c++/9/cmath /usr/include/c++/9/bits/cpp_type_traits.h \
+ /usr/include/c++/9/ext/type_traits.h /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+ /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+ /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+ /usr/include/x86_64-linux-gnu/bits/iscanonical.h /usr/include/time.h \
+ /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/timex.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+ /usr/include/c++/9/iostream /usr/include/c++/9/ostream \
  /usr/include/c++/9/ios /usr/include/c++/9/iosfwd \
  /usr/include/c++/9/bits/stringfwd.h /usr/include/c++/9/bits/memoryfwd.h \
  /usr/include/c++/9/bits/postypes.h /usr/include/c++/9/cwchar \
- /usr/include/wchar.h /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+ /usr/include/wchar.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
- /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
  /usr/include/c++/9/exception /usr/include/c++/9/bits/exception.h \
  /usr/include/c++/9/bits/exception_ptr.h \
  /usr/include/c++/9/bits/exception_defines.h \
@@ -134,6 +95,8 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/c++/9/bits/stl_iterator.h \
  /usr/include/c++/9/bits/ptr_traits.h /usr/include/c++/9/debug/debug.h \
  /usr/include/c++/9/bits/predefined_ops.h /usr/include/c++/9/cstdint \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/c++/9/bits/localefwd.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++locale.h \
  /usr/include/c++/9/clocale /usr/include/locale.h \
@@ -145,11 +108,7 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/pthread.h /usr/include/sched.h \
  /usr/include/x86_64-linux-gnu/bits/sched.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
- /usr/include/x86_64-linux-gnu/bits/cpu-set.h /usr/include/time.h \
- /usr/include/x86_64-linux-gnu/bits/time.h \
- /usr/include/x86_64-linux-gnu/bits/timex.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+ /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/atomic_word.h \
  /usr/include/c++/9/bits/locale_classes.h /usr/include/c++/9/string \
@@ -165,14 +124,7 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/c++/9/bits/basic_string.h \
  /usr/include/c++/9/ext/alloc_traits.h \
  /usr/include/c++/9/bits/alloc_traits.h \
- /usr/include/c++/9/ext/string_conversions.h /usr/include/c++/9/cstdlib \
- /usr/include/c++/9/cstdio /usr/include/stdio.h \
- /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
- /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
- /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
- /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/c++/9/ext/string_conversions.h /usr/include/c++/9/cstdio \
  /usr/include/c++/9/cerrno /usr/include/errno.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
@@ -192,76 +144,48 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/c++/9/bits/streambuf_iterator.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/ctype_inline.h \
  /usr/include/c++/9/bits/locale_facets.tcc \
- /usr/include/c++/9/bits/basic_ios.tcc /usr/include/c++/9/memory \
+ /usr/include/c++/9/bits/basic_ios.tcc \
+ /usr/include/c++/9/bits/ostream.tcc /usr/include/c++/9/istream \
+ /usr/include/c++/9/bits/istream.tcc /usr/include/c++/9/vector \
  /usr/include/c++/9/bits/stl_construct.h \
  /usr/include/c++/9/bits/stl_uninitialized.h \
- /usr/include/c++/9/bits/stl_tempbuf.h \
- /usr/include/c++/9/bits/stl_raw_storage_iter.h \
- /usr/include/c++/9/ext/concurrence.h \
- /usr/include/c++/9/bits/uses_allocator.h \
- /usr/include/c++/9/bits/unique_ptr.h /usr/include/c++/9/utility \
- /usr/include/c++/9/bits/stl_relops.h /usr/include/c++/9/tuple \
- /usr/include/c++/9/array /usr/include/c++/9/bits/invoke.h \
- /usr/include/c++/9/bits/shared_ptr.h \
- /usr/include/c++/9/bits/shared_ptr_base.h \
- /usr/include/c++/9/bits/allocated_ptr.h \
- /usr/include/c++/9/bits/refwrap.h \
- /usr/include/c++/9/ext/aligned_buffer.h \
- /usr/include/c++/9/bits/shared_ptr_atomic.h \
- /usr/include/c++/9/bits/atomic_base.h \
- /usr/include/c++/9/bits/atomic_lockfree_defines.h \
- /usr/include/c++/9/backward/auto_ptr.h /usr/include/yaml-cpp/dll.h \
- /usr/include/yaml-cpp/noncopyable.h /usr/include/yaml-cpp/emitter.h \
- /usr/include/c++/9/cstddef /usr/include/c++/9/sstream \
- /usr/include/c++/9/istream /usr/include/c++/9/ostream \
- /usr/include/c++/9/bits/ostream.tcc /usr/include/c++/9/bits/istream.tcc \
- /usr/include/c++/9/bits/sstream.tcc /usr/include/yaml-cpp/binary.h \
- /usr/include/c++/9/vector /usr/include/c++/9/bits/stl_vector.h \
+ /usr/include/c++/9/bits/stl_vector.h \
  /usr/include/c++/9/bits/stl_bvector.h /usr/include/c++/9/bits/vector.tcc \
- /usr/include/yaml-cpp/emitterdef.h /usr/include/yaml-cpp/emittermanip.h \
- /usr/include/yaml-cpp/null.h /usr/include/yaml-cpp/ostream_wrapper.h \
- /usr/include/yaml-cpp/emitterstyle.h /usr/include/yaml-cpp/stlemitter.h \
- /usr/include/c++/9/list /usr/include/c++/9/bits/stl_list.h \
- /usr/include/c++/9/bits/list.tcc /usr/include/c++/9/set \
- /usr/include/c++/9/bits/stl_tree.h /usr/include/c++/9/bits/stl_set.h \
- /usr/include/c++/9/bits/stl_multiset.h \
- /usr/include/c++/9/bits/erase_if.h /usr/include/c++/9/map \
- /usr/include/c++/9/bits/stl_map.h /usr/include/c++/9/bits/stl_multimap.h \
- /usr/include/yaml-cpp/exceptions.h /usr/include/yaml-cpp/mark.h \
- /usr/include/yaml-cpp/traits.h /usr/include/yaml-cpp/node/node.h \
- /usr/include/yaml-cpp/node/detail/bool_type.h \
- /usr/include/yaml-cpp/node/detail/iterator_fwd.h \
- /usr/include/yaml-cpp/node/ptr.h /usr/include/yaml-cpp/node/type.h \
- /usr/include/yaml-cpp/node/impl.h /usr/include/yaml-cpp/node/iterator.h \
- /usr/include/yaml-cpp/node/detail/iterator.h \
- /usr/include/yaml-cpp/node/detail/node_iterator.h \
- /usr/include/c++/9/iterator /usr/include/c++/9/bits/stream_iterator.h \
- /usr/include/yaml-cpp/node/detail/memory.h \
- /usr/include/yaml-cpp/node/detail/node.h \
- /usr/include/yaml-cpp/node/detail/node_ref.h \
- /usr/include/yaml-cpp/node/detail/node_data.h \
- /usr/include/yaml-cpp/node/convert.h /usr/include/c++/9/limits \
- /usr/include/yaml-cpp/node/detail/impl.h \
- /usr/include/yaml-cpp/node/parse.h /usr/include/yaml-cpp/node/emit.h \
- /usr/include/c++/9/iostream /usr/include/c++/9/fstream \
+ /usr/include/string.h /usr/include/strings.h /usr/include/c++/9/fstream \
  /usr/include/c++/9/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++io.h \
- /usr/include/c++/9/bits/fstream.tcc /usr/include/c++/9/stdlib.h \
- /home/cci502/software/box2d-master/colregs_sim/mass_agent.h \
- /home/cci502/software/box2d-master/colregs_sim/agent.h \
- /usr/include/c++/9/random /usr/include/c++/9/bits/random.h \
+ /usr/include/c++/9/bits/fstream.tcc /usr/include/c++/9/random \
+ /usr/include/c++/9/limits /usr/include/c++/9/bits/random.h \
  /usr/include/c++/9/bits/uniform_int_dist.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/opt_random.h \
  /usr/include/c++/9/bits/random.tcc /usr/include/c++/9/numeric \
  /usr/include/c++/9/bits/stl_numeric.h /usr/include/c++/9/chrono \
  /usr/include/c++/9/ratio /usr/include/c++/9/ctime \
  /usr/include/c++/9/bits/parse_numbers.h /usr/include/armadillo \
- /usr/include/c++/9/cstring /usr/include/c++/9/climits \
- /usr/include/c++/9/algorithm /usr/include/c++/9/bits/stl_algo.h \
+ /usr/include/c++/9/cstddef /usr/include/c++/9/cstring \
+ /usr/include/c++/9/climits \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/syslimits.h \
+ /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+ /usr/include/linux/limits.h \
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/uio_lim.h /usr/include/c++/9/sstream \
+ /usr/include/c++/9/bits/sstream.tcc /usr/include/c++/9/algorithm \
+ /usr/include/c++/9/utility /usr/include/c++/9/bits/stl_relops.h \
+ /usr/include/c++/9/bits/stl_algo.h \
  /usr/include/c++/9/bits/algorithmfwd.h \
- /usr/include/c++/9/bits/stl_heap.h /usr/include/c++/9/complex \
- /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+ /usr/include/c++/9/bits/stl_heap.h /usr/include/c++/9/bits/stl_tempbuf.h \
+ /usr/include/c++/9/complex /usr/include/c++/9/map \
+ /usr/include/c++/9/bits/stl_tree.h \
+ /usr/include/c++/9/ext/aligned_buffer.h \
+ /usr/include/c++/9/bits/stl_map.h /usr/include/c++/9/tuple \
+ /usr/include/c++/9/array /usr/include/c++/9/bits/uses_allocator.h \
+ /usr/include/c++/9/bits/invoke.h /usr/include/c++/9/bits/stl_multimap.h \
+ /usr/include/c++/9/bits/erase_if.h /usr/include/unistd.h \
+ /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
@@ -271,9 +195,12 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/armadillo_bits/compiler_extra.hpp \
  /usr/include/armadillo_bits/config.hpp \
  /usr/include/armadillo_bits/compiler_setup.hpp \
- /usr/include/c++/9/functional /usr/include/c++/9/bits/std_function.h \
- /usr/include/c++/9/mutex /usr/include/c++/9/bits/std_mutex.h \
+ /usr/include/c++/9/functional /usr/include/c++/9/bits/refwrap.h \
+ /usr/include/c++/9/bits/std_function.h /usr/include/c++/9/mutex \
+ /usr/include/c++/9/bits/std_mutex.h \
  /usr/include/c++/9/bits/unique_lock.h /usr/include/c++/9/atomic \
+ /usr/include/c++/9/bits/atomic_base.h \
+ /usr/include/c++/9/bits/atomic_lockfree_defines.h \
  /usr/include/armadillo_bits/include_atlas.hpp \
  /usr/include/armadillo_bits/include_hdf5.hpp \
  /usr/include/armadillo_bits/include_superlu.hpp \
@@ -846,4 +773,76 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/armadillo_bits/newarp_UpperHessenbergEigen_meat.hpp \
  /usr/include/armadillo_bits/newarp_UpperHessenbergQR_meat.hpp \
  /usr/include/armadillo_bits/compiler_setup_post.hpp \
- /home/cci502/software/box2d-master/colregs_sim/normal_agent.h
+ /home/cci502/software/box2d-master/colregs_sim/normal_agent.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/box2d.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_settings.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_types.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_api.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_common.h \
+ /usr/include/assert.h /usr/lib/gcc/x86_64-linux-gnu/9/include/float.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_draw.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_math.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_timer.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_chain_shape.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_shape.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_collision.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_circle_shape.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_edge_shape.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_polygon_shape.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_broad_phase.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_dynamic_tree.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_growable_stack.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_body.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_contact.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_fixture.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_time_step.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_world.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_block_allocator.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_contact_manager.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_stack_allocator.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_world_callbacks.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_distance_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_friction_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_gear_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_motor_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_mouse_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_prismatic_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_pulley_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_revolute_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_weld_joint.h \
+ /home/cci502/software/box2d-master/src/../include/box2d/b2_wheel_joint.h \
+ /usr/include/yaml-cpp/yaml.h /usr/include/yaml-cpp/parser.h \
+ /usr/include/c++/9/memory /usr/include/c++/9/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/9/ext/concurrence.h \
+ /usr/include/c++/9/bits/unique_ptr.h \
+ /usr/include/c++/9/bits/shared_ptr.h \
+ /usr/include/c++/9/bits/shared_ptr_base.h \
+ /usr/include/c++/9/bits/allocated_ptr.h \
+ /usr/include/c++/9/bits/shared_ptr_atomic.h \
+ /usr/include/c++/9/backward/auto_ptr.h /usr/include/yaml-cpp/dll.h \
+ /usr/include/yaml-cpp/noncopyable.h /usr/include/yaml-cpp/emitter.h \
+ /usr/include/yaml-cpp/binary.h /usr/include/yaml-cpp/emitterdef.h \
+ /usr/include/yaml-cpp/emittermanip.h /usr/include/yaml-cpp/null.h \
+ /usr/include/yaml-cpp/ostream_wrapper.h \
+ /usr/include/yaml-cpp/emitterstyle.h /usr/include/yaml-cpp/stlemitter.h \
+ /usr/include/c++/9/list /usr/include/c++/9/bits/stl_list.h \
+ /usr/include/c++/9/bits/list.tcc /usr/include/c++/9/set \
+ /usr/include/c++/9/bits/stl_set.h /usr/include/c++/9/bits/stl_multiset.h \
+ /usr/include/yaml-cpp/exceptions.h /usr/include/yaml-cpp/mark.h \
+ /usr/include/yaml-cpp/traits.h /usr/include/yaml-cpp/node/node.h \
+ /usr/include/yaml-cpp/node/detail/bool_type.h \
+ /usr/include/yaml-cpp/node/detail/iterator_fwd.h \
+ /usr/include/yaml-cpp/node/ptr.h /usr/include/yaml-cpp/node/type.h \
+ /usr/include/yaml-cpp/node/impl.h /usr/include/yaml-cpp/node/iterator.h \
+ /usr/include/yaml-cpp/node/detail/iterator.h \
+ /usr/include/yaml-cpp/node/detail/node_iterator.h \
+ /usr/include/c++/9/iterator /usr/include/c++/9/bits/stream_iterator.h \
+ /usr/include/yaml-cpp/node/detail/memory.h \
+ /usr/include/yaml-cpp/node/detail/node.h \
+ /usr/include/yaml-cpp/node/detail/node_ref.h \
+ /usr/include/yaml-cpp/node/detail/node_data.h \
+ /usr/include/yaml-cpp/node/convert.h \
+ /usr/include/yaml-cpp/node/detail/impl.h \
+ /usr/include/yaml-cpp/node/parse.h /usr/include/yaml-cpp/node/emit.h \
+ /home/cci502/software/box2d-master/colregs_sim/agent.h

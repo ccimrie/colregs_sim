@@ -1,6 +1,8 @@
-colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
- /home/cci502/software/box2d-master/colregs_sim/main.cpp \
+colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o: \
+ /home/cci502/software/box2d-master/colregs_sim/mass_agent.cpp \
  /usr/include/stdc-predef.h \
+ /home/cci502/software/box2d-master/colregs_sim/mass_agent.h \
+ /home/cci502/software/box2d-master/colregs_sim/agent.h \
  /home/cci502/software/box2d-master/src/../include/box2d/box2d.h \
  /home/cci502/software/box2d-master/src/../include/box2d/b2_settings.h \
  /home/cci502/software/box2d-master/src/../include/box2d/b2_types.h \
@@ -243,14 +245,12 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/yaml-cpp/node/convert.h /usr/include/c++/9/limits \
  /usr/include/yaml-cpp/node/detail/impl.h \
  /usr/include/yaml-cpp/node/parse.h /usr/include/yaml-cpp/node/emit.h \
- /usr/include/c++/9/iostream /usr/include/c++/9/fstream \
- /usr/include/c++/9/bits/codecvt.h \
+ /usr/include/c++/9/stdlib.h /usr/include/c++/9/iostream \
+ /usr/include/c++/9/fstream /usr/include/c++/9/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++io.h \
- /usr/include/c++/9/bits/fstream.tcc /usr/include/c++/9/stdlib.h \
- /home/cci502/software/box2d-master/colregs_sim/mass_agent.h \
- /home/cci502/software/box2d-master/colregs_sim/agent.h \
- /usr/include/c++/9/random /usr/include/c++/9/bits/random.h \
+ /usr/include/c++/9/bits/fstream.tcc /usr/include/c++/9/random \
+ /usr/include/c++/9/bits/random.h \
  /usr/include/c++/9/bits/uniform_int_dist.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/opt_random.h \
  /usr/include/c++/9/bits/random.tcc /usr/include/c++/9/numeric \
@@ -845,5 +845,4 @@ colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o: \
  /usr/include/armadillo_bits/newarp_TridiagEigen_meat.hpp \
  /usr/include/armadillo_bits/newarp_UpperHessenbergEigen_meat.hpp \
  /usr/include/armadillo_bits/newarp_UpperHessenbergQR_meat.hpp \
- /usr/include/armadillo_bits/compiler_setup_post.hpp \
- /home/cci502/software/box2d-master/colregs_sim/normal_agent.h
+ /usr/include/armadillo_bits/compiler_setup_post.hpp

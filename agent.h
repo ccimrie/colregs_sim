@@ -18,22 +18,21 @@ class agent
 {
   public:
     agent();
-    agent(double maxX, double maxY, double mxV);
     agent(std::string yaml_file, std::string results_file, double seed);
-    // agent(agent& copy_agent);
     void initialiseAgent();
+
     b2BodyDef getBodyDef();
     void setBody(b2Body* _body);
     b2Body* getBody();
     double getRange();
-	  void updateVelPot(int robot, std::vector<b2Body*> robots, std::vector<b2Body*> oil);
-    // void updateVel(double c_theta);
-    // void updateVel(double other_pos_x, double other_pos_y, double other_vel_mag, double dist, double other_radius, double other_theta);
-    void updateVel(agent* neighbour);
+
     double getVelX();
 	  double getVelY();
     double getRadius();
     double getMaxVel();
+
+    void setBodyDefPose(double _x_pos, double _y_pos, double _theta);
+    void setBodyPosition(double _x_pos, double _y_pos);
 
     double getVelMag();
     void brownian();
@@ -58,16 +57,9 @@ class agent
 
     void recordStep(int t);
 
-    int checkFuture(int lookahead_time, double neigh_pos_x, double neigh_pos_y, double neigh_vel_mag, double neigh_theta, double neigh_radius);
-    void oncomingUpdate(double other_targ_relative_pos_x, double other_target_relative_pos_y, double dist, double other_radius, int time_collision);
-    void overTakingUpdate(double o_pos_x, double o_pos_y, double dist, double o_radius, double other_vel_mag, int time_collision);
-    void makeWayUpdate(double o_relative_theta, double other_radius);
-    void crossingUpdate(double other_relative_pos_x, double other_relative_pos_y, double dist, double other_radius, int time_collision);
-
-    double newAngleWorldFrame(double other_pos_x, double other_pos_y, double other_radius, double frame_theta);
     double targAngle();
     double egoAngle();
-  private:
+  protected:
     // To initialise agent
     std::string yaml_file;
     double seed;
