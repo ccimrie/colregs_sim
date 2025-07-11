@@ -44,6 +44,8 @@ void MassAgent::updateVel()
 
 void MassAgent::updateNeighPF(agent* neighbour)
 {
+  // int true_class=...
+  // int predicted_class=prediction(true_class);
  // Extract useful information from self/ego
   double pos_x=getBody()->GetPosition().x;
   double pos_y=getBody()->GetPosition().y;  
@@ -58,8 +60,12 @@ void MassAgent::updateNeighPF(agent* neighbour)
   double o_theta=atan2(dist_y, dist_x);
   dist-=(radius+other_radius);
 
+  double temp_neigh_weight=neigh_weight;
+  if (dist<safety_bubble) neigh_weight=10.0; 
+
   pf_x_neigh+=-neigh_weight*(range-dist)*cos(o_theta);
   pf_y_neigh+=-neigh_weight*(range-dist)*sin(o_theta);
+  neigh_weight=temp_neigh_weight;
 }
 
 
