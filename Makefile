@@ -175,101 +175,101 @@ mass_colregs/fast:
 	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/build
 .PHONY : mass_colregs/fast
 
-agent.o: agent.cpp.o
-.PHONY : agent.o
+src/agent.o: src/agent.cpp.o
+.PHONY : src/agent.o
 
 # target to build an object file
-agent.cpp.o:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/agent.cpp.o
-.PHONY : agent.cpp.o
+src/agent.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/agent.cpp.o
+.PHONY : src/agent.cpp.o
 
-agent.i: agent.cpp.i
-.PHONY : agent.i
+src/agent.i: src/agent.cpp.i
+.PHONY : src/agent.i
 
 # target to preprocess a source file
-agent.cpp.i:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/agent.cpp.i
-.PHONY : agent.cpp.i
+src/agent.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/agent.cpp.i
+.PHONY : src/agent.cpp.i
 
-agent.s: agent.cpp.s
-.PHONY : agent.s
+src/agent.s: src/agent.cpp.s
+.PHONY : src/agent.s
 
 # target to generate assembly for a file
-agent.cpp.s:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/agent.cpp.s
-.PHONY : agent.cpp.s
+src/agent.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/agent.cpp.s
+.PHONY : src/agent.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
 
 # target to build an object file
-main.cpp.o:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.o
-.PHONY : main.cpp.o
+src/main.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/main.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/main.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
-mass_agent.o: mass_agent.cpp.o
-.PHONY : mass_agent.o
+src/mass_agent.o: src/mass_agent.cpp.o
+.PHONY : src/mass_agent.o
 
 # target to build an object file
-mass_agent.cpp.o:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.o
-.PHONY : mass_agent.cpp.o
+src/mass_agent.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.o
+.PHONY : src/mass_agent.cpp.o
 
-mass_agent.i: mass_agent.cpp.i
-.PHONY : mass_agent.i
+src/mass_agent.i: src/mass_agent.cpp.i
+.PHONY : src/mass_agent.i
 
 # target to preprocess a source file
-mass_agent.cpp.i:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.i
-.PHONY : mass_agent.cpp.i
+src/mass_agent.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.i
+.PHONY : src/mass_agent.cpp.i
 
-mass_agent.s: mass_agent.cpp.s
-.PHONY : mass_agent.s
+src/mass_agent.s: src/mass_agent.cpp.s
+.PHONY : src/mass_agent.s
 
 # target to generate assembly for a file
-mass_agent.cpp.s:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/mass_agent.cpp.s
-.PHONY : mass_agent.cpp.s
+src/mass_agent.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.s
+.PHONY : src/mass_agent.cpp.s
 
-normal_agent.o: normal_agent.cpp.o
-.PHONY : normal_agent.o
+src/normal_agent.o: src/normal_agent.cpp.o
+.PHONY : src/normal_agent.o
 
 # target to build an object file
-normal_agent.cpp.o:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.o
-.PHONY : normal_agent.cpp.o
+src/normal_agent.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.o
+.PHONY : src/normal_agent.cpp.o
 
-normal_agent.i: normal_agent.cpp.i
-.PHONY : normal_agent.i
+src/normal_agent.i: src/normal_agent.cpp.i
+.PHONY : src/normal_agent.i
 
 # target to preprocess a source file
-normal_agent.cpp.i:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.i
-.PHONY : normal_agent.cpp.i
+src/normal_agent.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.i
+.PHONY : src/normal_agent.cpp.i
 
-normal_agent.s: normal_agent.cpp.s
-.PHONY : normal_agent.s
+src/normal_agent.s: src/normal_agent.cpp.s
+.PHONY : src/normal_agent.s
 
 # target to generate assembly for a file
-normal_agent.cpp.s:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/normal_agent.cpp.s
-.PHONY : normal_agent.cpp.s
+src/normal_agent.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.s
+.PHONY : src/normal_agent.cpp.s
 
 # Help Target
 help:
@@ -284,18 +284,18 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... mass_colregs"
-	@echo "... agent.o"
-	@echo "... agent.i"
-	@echo "... agent.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... mass_agent.o"
-	@echo "... mass_agent.i"
-	@echo "... mass_agent.s"
-	@echo "... normal_agent.o"
-	@echo "... normal_agent.i"
-	@echo "... normal_agent.s"
+	@echo "... src/agent.o"
+	@echo "... src/agent.i"
+	@echo "... src/agent.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/mass_agent.o"
+	@echo "... src/mass_agent.i"
+	@echo "... src/mass_agent.s"
+	@echo "... src/normal_agent.o"
+	@echo "... src/normal_agent.i"
+	@echo "... src/normal_agent.s"
 .PHONY : help
 
 

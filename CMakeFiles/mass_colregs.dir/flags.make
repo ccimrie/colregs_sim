@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/include/python3.9 -I/home/cci502/software/box2d-master/colregs_sim -I/home/cci502/software/box2d-master/src/../include
+CXX_INCLUDES = -I/usr/include/python3.9 -I/home/cci502/software/box2d-master/colregs_sim -I/home/cci502/software/box2d-master/colregs_sim/include -I/home/cci502/software/box2d-master/src/../include
 
 CXX_FLAGS = -std=c++11 -fvisibility=hidden -fvisibility-inlines-hidden
 

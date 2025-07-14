@@ -22,10 +22,13 @@ def updateAgent(agent_ax, agent, t):
     r_radius=agent_ax[1]
     agent_ax[0].center=agent[t,0],agent[t,1]
     agent_ax[2].center=agent[t,0],agent[t,1]
-    pt_x=(1.2*r_radius)*np.cos(agent[t,2]*np.pi/180.0)
-    pt_y=(1.2*r_radius)*np.sin(agent[t,2]*np.pi/180.0)
-    agent_ax[6].set_data([agent[t,0], agent[t,0]+pt_x], [agent[t,1], agent[t,1]+pt_y])
-    return agent_ax[0], agent_ax[2], agent_ax[6]
+    # pt_x=(1.2*r_radius)*np.cos(agent[t,2]*np.pi/180.0)
+    # pt_y=(1.2*r_radius)*np.sin(agent[t,2]*np.pi/180.0)
+    heading_x=agent[t,0]
+    heading_y=agent[t,1]-(0.1*r_radius)*0.5
+    agent_ax[4].set_xy([heading_x, heading_y])
+    agent_ax[4].set_angle(agent[t,2])
+    return agent_ax[0], agent_ax[2], agent_ax[4]
 
 def plotOnAx(values, t, ax_x, colour=None):
     start_time=int(values[0,9])
@@ -46,13 +49,22 @@ def plotOnAx(values, t, ax_x, colour=None):
     rbt_lnx=(1.2*r_radius)*np.cos(values[t,2]*np.pi/180.0)
     rbt_lny=(1.2*r_radius)*np.sin(values[t,2]*np.pi/180.0)
 
-    ## Local line
-    rbt_ln,=ax_x.plot([values[t,0],values[t,0]+rbt_lnx], [values[t,1], values[t,1]+rbt_lny], linewidth=r_radius*3, c=[0,0,0], zorder=20)
-    agent=[rbt, r_radius, rbt_sns, rbt_angle, rbt_lnx, rbt_lny, rbt_ln]
+    ## Local line (heading direction)
+    # rbt_ln,=ax_x.plot([values[t,0],values[t,0]+rbt_lnx], [values[t,1], values[t,1]+rbt_lny], linewidth=r_radius*3, c=[0,0,0], zorder=20)
+    # agent=[rbt, r_radius, rbt_sns, rbt_angle, rbt_lnx, rbt_lny, rbt_ln]
+    heading_length=r_radius*1.2
+    width_scale=0.2 # cover 10% of agent
+    heading_width=r_radius*width_scale
+    bottom_left_corner=values[t,0:2]
+    bottom_left_corner[1]-=width_scale*0.5
+    rbt_heading=plt.Rectangle(bottom_left_corner,r_radius*1.2,r_radius*0.1,angle=rbt_angle,fc=[0,0,0], zorder=15)
+    ax_x.add_patch(rbt_heading)
+    agent=[rbt, r_radius, rbt_sns, rbt_angle, rbt_heading]
     return agent
 
 def getAllAgentInfo():
-    files=os.listdir('results')
+    results_dir='../results'
+    files=os.listdir(results_dir)
     files=[file for file in files if file[-4:]=='.txt']
     goals={}
     goal_ind=0
@@ -64,7 +76,7 @@ def getAllAgentInfo():
     TT=0
 
     for file in files:
-        results=np.loadtxt('results/'+file)
+        results=np.loadtxt(f'{results_dir}/{file}')
         goal=results[0,5:9]
         found=False
         for key in goals:
@@ -139,16 +151,22 @@ def setUpSimAxesOnly(zoom_mag, goals, max_vals, colour=None):
 
     return fig, ax, ax_zoom
 
-def setupAxes(zoom_mag):
-    files=os.listdir('results')
+def setupAxes(zoom=False, zoom_mag=0.0):
+    results_dir='../results'
+    files=os.listdir(results_dir)
     files=[file for file in files if file[-4:]=='.txt']
     fig=plt.figure()
     axs=[]
-    gs=fig.add_gridspec(2, 3)
-    ax=fig.add_subplot(gs[0,0:2])
-    ax_lines=fig.add_subplot(gs[:,2])
-    ax_zoom=fig.add_subplot(gs[1,0:2])
 
+    if zoom:
+        gs=fig.add_gridspec(2, 3)
+        ax=fig.add_subplot(gs[0,0:2])
+        ax_lines=fig.add_subplot(gs[:,2])
+        ax_zoom=fig.add_subplot(gs[1,0:2])
+    else:
+        gs=fig.add_gridspec(2, 2)
+        ax=fig.add_subplot(gs[:,0])
+        ax_lines=fig.add_subplot(gs[:,1])
     # output=[]
     # agents=[]
     # agents_zoom=[]
@@ -163,7 +181,7 @@ def setupAxes(zoom_mag):
     max_vals=[]
 
     for file in files:
-        results=np.loadtxt('results/'+file)
+        results=np.loadtxt(f'{results_dir}/{file}')
 
         goal=results[0,5:9]
         found=False
@@ -179,9 +197,12 @@ def setupAxes(zoom_mag):
             agent=plotOnAx(results, 0, ax)
             # agents.append(agent)
 
-            agent_zoom=plotOnAx(results,0,ax_zoom)
-            # agents_zoom.append(agent_zoom)
-            agent_deployed_info[file]=[agent, agent_zoom, results]
+            if zoom:
+                agent_zoom=plotOnAx(results,0,ax_zoom)
+                # agents_zoom.append(agent_zoom)
+                agent_deployed_info[file]=[agent, agent_zoom, results]
+            else:
+                agent_deployed_info[file]=[agent, results]
         else:
             agent_waiting_info[file]=results
         # output.append(results)
@@ -214,8 +235,9 @@ def setupAxes(zoom_mag):
         temp_goal_area_zoom=plt.Rectangle(rect_start_xy,width,height,fc=getColour(goal_type), alpha=0.3, zorder=1)
         temp_goal_area_lines=plt.Rectangle(rect_start_xy,width,height,fc=getColour(goal_type), alpha=0.3, zorder=1)
         ax.add_patch(temp_goal_area_reg)
-        ax_zoom.add_patch(temp_goal_area_zoom)
         ax_lines.add_patch(temp_goal_area_lines)
+        if zoom:
+            ax_zoom.add_patch(temp_goal_area_zoom)
 
       ## Track max/min positions for plotting
         if start_x<x_min:
@@ -229,17 +251,22 @@ def setupAxes(zoom_mag):
 
     water_background_colour=np.array([214,239,255])/255.0
     ax.set_facecolor(water_background_colour)
-    ax_zoom.set_facecolor(water_background_colour)
+
+    if zoom:
+        ax_zoom.set_facecolor(water_background_colour)
 
     #add rectangle to plot
     ax.set_xlim([x_min,x_max])
     ax.set_ylim([y_min,y_max])
     ax.set_aspect('equal')
 
-    zoom_mag=1.0/zoom_mag
-    ax_zoom.set_xlim([zoom_mag*x_min,zoom_mag*x_max])
-    ax_zoom.set_ylim([zoom_mag*y_min,zoom_mag*y_max])
-    ax_zoom.set_aspect('equal')
-
-    return fig, ax, ax_zoom, ax_lines, agent_deployed_info, agent_waiting_info, TT 
+    if zoom:
+        print(zoom)
+        zoom_mag=1.0/zoom_mag
+        ax_zoom.set_xlim([zoom_mag*x_min,zoom_mag*x_max])
+        ax_zoom.set_ylim([zoom_mag*y_min,zoom_mag*y_max])
+        ax_zoom.set_aspect('equal')
+        return fig, ax, ax_zoom, ax_lines, agent_deployed_info, agent_waiting_info, TT 
+    else:
+        return fig, ax, ax_lines, agent_deployed_info, agent_waiting_info, TT
     # return fig, ax, ax_zoom, ax_lines, agents, agents_zoom, output
