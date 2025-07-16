@@ -30,4 +30,4 @@ forbidden zones:
     y:
       min: 0
       max: 10
-agent type: 2
+agent type: 1

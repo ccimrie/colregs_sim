@@ -286,33 +286,3 @@ double NormalAgent::newAngleWorldFrame(double other_pos_x, double other_pos_y, d
 
   return new_goal_theta;
 }
-
-void NormalAgent::recordStep(int t)
-{
-  // Recording:
-  //   - 0: x
-  //   - 1: y
-  //   - 2: \theta
-  //   - 3: radius (size)
-  //   - 4: sensor/communication range
-  //   - 5: x-target
-  //   - 6: x-target tolerance
-  //   - 7: y-target
-  //   - 8: y-target tolerance
-  //   - 9: current world timestep
-  //   - 10: agent type (for plotting and analysis)
-  outfile.open(filename, std::ios_base::app);
-  outfile << body->GetPosition().x  << " " 
-          << body->GetPosition().y << " " 
-          << body->GetAngle() << " "
-          << radius << " "
-          << range << " "
-          << targ_x << " "
-          << var_x << " "
-          << targ_y << " "
-          << var_y << " "
-          << t << " "
-          << agent_type << " ";
-  outfile << std::endl; 
-  outfile.close();
-}

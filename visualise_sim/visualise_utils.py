@@ -17,7 +17,7 @@ def getColour(x_type):
 
 
 def updateAgent(agent_ax, agent, t):
-    start_time=int(agent[0,9])
+    start_time=int(agent[0,11])
     t=t-start_time
     r_radius=agent_ax[1]
     agent_ax[0].center=agent[t,0],agent[t,1]
@@ -31,7 +31,7 @@ def updateAgent(agent_ax, agent, t):
     return agent_ax[0], agent_ax[2], agent_ax[4]
 
 def plotOnAx(values, t, ax_x, colour=None):
-    start_time=int(values[0,9])
+    start_time=int(values[0,11])
     t=t-start_time
     r_radius=values[t,3]
     rng_radius_small=values[t,4]
@@ -77,7 +77,7 @@ def getAllAgentInfo():
 
     for file in files:
         results=np.loadtxt(f'{results_dir}/{file}')
-        goal=results[0,5:9]
+        goal=results[0,7:11]
         found=False
         for key in goals:
             if (goals[key][0]==goal).all():
@@ -88,8 +88,8 @@ def getAllAgentInfo():
             goal_ind+=1
         agent_info[file]=results
         max_vals.append([np.max(results[:,0]), np.min(results[:,0]), np.max(results[:,1]), np.min(results[:,1]), int(results[-1,9])])
-        if results[-1,9]>TT:
-            TT=results[-1,9]
+        if results[-1,11]>TT:
+            TT=results[-1,11]
     return agent_info, max_vals, goals, TT
 
 def setUpSimAxesOnly(zoom_mag, goals, max_vals, colour=None):
@@ -183,7 +183,7 @@ def setupAxes(zoom=False, zoom_mag=0.0):
     for file in files:
         results=np.loadtxt(f'{results_dir}/{file}')
 
-        goal=results[0,5:9]
+        goal=results[0,7:11]
         found=False
         for key in goals:
             if (goals[key][0]==goal).all():
@@ -193,7 +193,7 @@ def setupAxes(zoom=False, zoom_mag=0.0):
             goals[goal_ind]=[goal, results[0,-1]]
             goal_ind+=1
 
-        if results[0,9]==0:
+        if results[0,11]==0:
             agent=plotOnAx(results, 0, ax)
             # agents.append(agent)
 
@@ -206,7 +206,7 @@ def setupAxes(zoom=False, zoom_mag=0.0):
         else:
             agent_waiting_info[file]=results
         # output.append(results)
-        max_vals.append([np.max(results[:,0]), np.min(results[:,0]), np.max(results[:,1]), np.min(results[:,1]), int(results[-1,9])])
+        max_vals.append([np.max(results[:,0]), np.min(results[:,0]), np.max(results[:,1]), np.min(results[:,1]), int(results[-1,11])])
         ax_lines.plot(results[:,0], results[:,1], c=getColour(results[0,-1]), zorder=10)
 
     buffer=1.5

@@ -1,7 +1,5 @@
-#ifndef AGENT_H
-#define AGENT_H
-#include "agent.h"
-#endif
+#include <agent.h>
+
 
 class MassAgent : public agent
 {

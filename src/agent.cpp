@@ -274,7 +274,6 @@ void agent::setVel(double _vel_x, double _vel_y)
   // updateVel(theta);
 }
 
-
 double agent::getRadius()
 {
   return radius;
@@ -285,26 +284,37 @@ double agent::getRange()
   return range;
 }
 
+void agent::agentNeighReset()
+{
+  no_neigh=0;
+  sum_neigh_dist=range;
+}
+
 void agent::recordStep(int t)
 {
+  // TODO: save output as csv file; easier to add without needing to modify python visualising/data analysis
   // Recording:
   //   - 0: x
   //   - 1: y
   //   - 2: \theta
   //   - 3: radius (size)
   //   - 4: sensor/communication range
-  //   - 5: x-target
-  //   - 6: x-target tolerance
-  //   - 7: y-target
-  //   - 8: y-target tolerance
-  //   - 9: current world timestep
-  //   - 10: agent type (for plotting and analysis)
+  //   - 5: number of neighbours
+  //   - 6: average distance to neighbours
+  //   - 7: x-target
+  //   - 8: x-target tolerance
+  //   - 9: y-target
+  //   - 10: y-target tolerance
+  //   - 11: current world timestep
+  //   - 12: agent type (for plotting and analysis)
   outfile.open(filename, std::ios_base::app);
   outfile << body->GetPosition().x  << " " 
           << body->GetPosition().y << " " 
           << body->GetAngle() << " "
           << radius << " "
           << range << " "
+          << no_neigh << " "
+          << sum_neigh_dist/no_neigh << " "
           << targ_x << " "
           << var_x << " "
           << targ_y << " "

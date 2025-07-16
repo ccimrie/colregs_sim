@@ -5,6 +5,7 @@ set (SOURCE_FILES
     src/agent.cpp
     src/normal_agent.cpp
     src/mass_agent.cpp
+    src/genetic_algorithm.cpp
 )
 
 find_package(PythonLibs REQUIRED)
@@ -21,3 +22,4 @@ set_target_properties(mass_colregs PROPERTIES
     CXX_EXTENSIONS NO
 )
 
+target_compile_features(mass_colregs PRIVATE cxx_std_17)

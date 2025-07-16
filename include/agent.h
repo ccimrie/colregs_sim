@@ -1,3 +1,6 @@
+#ifndef AGENT_H
+#define AGENT_H
+
 #include "box2d/box2d.h"
 #include "yaml-cpp/yaml.h"
 #include <stdio.h>
@@ -59,6 +62,13 @@ class agent
 
     double targAngle();
     double egoAngle();
+
+    void agentNeighReset();
+
+    // Neighbour information
+    int no_neigh=0;
+    double sum_neigh_dist=0.0;
+
   protected:
     // To initialise agent
     std::string yaml_file;
@@ -104,7 +114,10 @@ class agent
     double d_theta=0.5;
     std::tuple<double, double> rotate(double theta);
 
+
     // Recording
     std::string filename;
     std::ofstream outfile;
 };
+
+#endif

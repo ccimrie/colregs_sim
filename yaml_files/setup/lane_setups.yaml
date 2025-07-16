@@ -3,7 +3,7 @@ goal file: ../colregs_sim/yaml_files/setup/goal_locations.yaml
 results directory: ../colregs_sim/results/
 agents:
   agent0:
-    N: 20
+    N: 10
     yaml file: ../colregs_sim/yaml_files/agents/lane_0_agent.yaml
   # submarine:
   #   N: 5
@@ -17,14 +17,14 @@ agents:
   #   yaml file: ../colregs_sim/yaml_files/agents/opposite_headon_agent.yaml
 mass agents:
   pf normal:
-    N: 4
+    N: 2
     yaml file: ../colregs_sim/yaml_files/agents/pf_normal.yaml
     goal field weight: 1.0
     neighbour field weight: 0.1
     safety bubble: 0.0 
     results file: mass_output.txt
   mass agent:
-    N: 1
+    N: 0
     yaml file: ../colregs_sim/yaml_files/agents/mass_agent.yaml
     goal field weight: 1.0
     neighbour field weight: 0.1

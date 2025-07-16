@@ -199,6 +199,30 @@ src/agent.cpp.s:
 	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/agent.cpp.s
 .PHONY : src/agent.cpp.s
 
+src/genetic_algorithm.o: src/genetic_algorithm.cpp.o
+.PHONY : src/genetic_algorithm.o
+
+# target to build an object file
+src/genetic_algorithm.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o
+.PHONY : src/genetic_algorithm.cpp.o
+
+src/genetic_algorithm.i: src/genetic_algorithm.cpp.i
+.PHONY : src/genetic_algorithm.i
+
+# target to preprocess a source file
+src/genetic_algorithm.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.i
+.PHONY : src/genetic_algorithm.cpp.i
+
+src/genetic_algorithm.s: src/genetic_algorithm.cpp.s
+.PHONY : src/genetic_algorithm.s
+
+# target to generate assembly for a file
+src/genetic_algorithm.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.s
+.PHONY : src/genetic_algorithm.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -287,6 +311,9 @@ help:
 	@echo "... src/agent.o"
 	@echo "... src/agent.i"
 	@echo "... src/agent.s"
+	@echo "... src/genetic_algorithm.o"
+	@echo "... src/genetic_algorithm.i"
+	@echo "... src/genetic_algorithm.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
