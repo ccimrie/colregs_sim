@@ -65,6 +65,8 @@ class agent
 
     void agentNeighReset();
 
+    std::string getAgentType();
+
     // Neighbour information
     int no_neigh=0;
     double sum_neigh_dist=0.0;
@@ -81,7 +83,7 @@ class agent
     double sense;
     // double thresh;
     double range;
-    int agent_type; // For plotting and analysis purposes
+    std::string agent_type; // For visual classification purposes (and plotting/analysis)
 
     // Potential field values
     // double comf_dist;

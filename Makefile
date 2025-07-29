@@ -199,29 +199,29 @@ src/agent.cpp.s:
 	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/agent.cpp.s
 .PHONY : src/agent.cpp.s
 
-src/genetic_algorithm.o: src/genetic_algorithm.cpp.o
-.PHONY : src/genetic_algorithm.o
+src/csv_functions.o: src/csv_functions.cpp.o
+.PHONY : src/csv_functions.o
 
 # target to build an object file
-src/genetic_algorithm.cpp.o:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o
-.PHONY : src/genetic_algorithm.cpp.o
+src/csv_functions.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o
+.PHONY : src/csv_functions.cpp.o
 
-src/genetic_algorithm.i: src/genetic_algorithm.cpp.i
-.PHONY : src/genetic_algorithm.i
+src/csv_functions.i: src/csv_functions.cpp.i
+.PHONY : src/csv_functions.i
 
 # target to preprocess a source file
-src/genetic_algorithm.cpp.i:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.i
-.PHONY : src/genetic_algorithm.cpp.i
+src/csv_functions.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.i
+.PHONY : src/csv_functions.cpp.i
 
-src/genetic_algorithm.s: src/genetic_algorithm.cpp.s
-.PHONY : src/genetic_algorithm.s
+src/csv_functions.s: src/csv_functions.cpp.s
+.PHONY : src/csv_functions.s
 
 # target to generate assembly for a file
-src/genetic_algorithm.cpp.s:
-	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.s
-.PHONY : src/genetic_algorithm.cpp.s
+src/csv_functions.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.s
+.PHONY : src/csv_functions.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -295,6 +295,30 @@ src/normal_agent.cpp.s:
 	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.s
 .PHONY : src/normal_agent.cpp.s
 
+src/vision_unit.o: src/vision_unit.cpp.o
+.PHONY : src/vision_unit.o
+
+# target to build an object file
+src/vision_unit.cpp.o:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o
+.PHONY : src/vision_unit.cpp.o
+
+src/vision_unit.i: src/vision_unit.cpp.i
+.PHONY : src/vision_unit.i
+
+# target to preprocess a source file
+src/vision_unit.cpp.i:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.i
+.PHONY : src/vision_unit.cpp.i
+
+src/vision_unit.s: src/vision_unit.cpp.s
+.PHONY : src/vision_unit.s
+
+# target to generate assembly for a file
+src/vision_unit.cpp.s:
+	cd /home/cci502/software/box2d-master && $(MAKE) $(MAKESILENT) -f colregs_sim/CMakeFiles/mass_colregs.dir/build.make colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.s
+.PHONY : src/vision_unit.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -311,9 +335,9 @@ help:
 	@echo "... src/agent.o"
 	@echo "... src/agent.i"
 	@echo "... src/agent.s"
-	@echo "... src/genetic_algorithm.o"
-	@echo "... src/genetic_algorithm.i"
-	@echo "... src/genetic_algorithm.s"
+	@echo "... src/csv_functions.o"
+	@echo "... src/csv_functions.i"
+	@echo "... src/csv_functions.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -323,6 +347,9 @@ help:
 	@echo "... src/normal_agent.o"
 	@echo "... src/normal_agent.i"
 	@echo "... src/normal_agent.s"
+	@echo "... src/vision_unit.o"
+	@echo "... src/vision_unit.i"
+	@echo "... src/vision_unit.s"
 .PHONY : help
 
 

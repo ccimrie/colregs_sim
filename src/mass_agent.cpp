@@ -1,5 +1,6 @@
-#include "mass_agent.h"
+#include <mass_agent.h>
 #include <cmath>
+#include <vision_unit.h>
 // #define M_PI 3.14159265
 
 MassAgent::MassAgent()
@@ -44,8 +45,6 @@ void MassAgent::updateVel()
 
 void MassAgent::updateNeighPF(agent* neighbour)
 {
-  // int true_class=...
-  // int predicted_class=prediction(true_class);
  // Extract useful information from self/ego
   double pos_x=getBody()->GetPosition().x;
   double pos_y=getBody()->GetPosition().y;  
@@ -60,9 +59,15 @@ void MassAgent::updateNeighPF(agent* neighbour)
   double o_theta=atan2(dist_y, dist_x);
   dist-=(radius+other_radius);
 
-  double temp_neigh_weight=neigh_weight;
-  if (dist<safety_bubble) neigh_weight=10.0; 
+ // Vision perception unit
+  string true_class=neighbour->getAgentType();
+  string predicted_class=vision.predict(true_class, dist+radius);
 
+ // Check if inside safety bubble
+  double temp_neigh_weight=neigh_weight;
+  if (dist<safety_bubble[predicted_class]) neigh_weight=10.0; 
+
+ // Calculate potential fields
   pf_x_neigh+=-neigh_weight*(range-dist)*cos(o_theta);
   pf_y_neigh+=-neigh_weight*(range-dist)*sin(o_theta);
   neigh_weight=temp_neigh_weight;

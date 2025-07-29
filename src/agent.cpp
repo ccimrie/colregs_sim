@@ -68,7 +68,7 @@ void agent::initialiseAgent()
   range=radius*config["range-size ratio"].as<double>();
   vel_max=radius*config["vel-size ratio"]["linear"].as<double>();
   vel_theta_max=config["vel-size ratio"]["angular"].as<double>()/radius;
-  agent_type=config["agent type"].as<int>();
+  agent_type=config["agent type"].as<std::string>();
 
  // Set target
   targ_x=config["goal pose"]["x"]["target"].as<double>();
@@ -288,6 +288,11 @@ void agent::agentNeighReset()
 {
   no_neigh=0;
   sum_neigh_dist=range;
+}
+
+std::string agent::getAgentType()
+{
+  return agent_type;
 }
 
 void agent::recordStep(int t)

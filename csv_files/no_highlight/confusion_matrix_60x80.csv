@@ -1,0 +1,10 @@
+,Bulkers,Car_Carrier,Container_Ship,Cruise,DDG,Recreational,Sailboat,Submarine,Tug
+Bulkers,0,0,0,7,0,0,1,6,0
+Car_Carrier,0,0,0,26,2,0,6,10,0
+Container_Ship,0,0,0,8,3,0,3,34,0
+Cruise,0,0,0,6,1,0,3,29,0
+DDG,0,0,0,27,0,0,3,12,0
+Recreational,0,0,0,11,3,0,2,0,0
+Sailboat,0,0,0,10,3,0,0,2,0
+Submarine,0,0,0,22,5,0,5,6,0
+Tug,0,0,0,23,2,0,4,6,0

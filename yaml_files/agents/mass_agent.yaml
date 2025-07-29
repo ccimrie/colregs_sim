@@ -30,4 +30,16 @@ forbidden zones:
     y:
       min: 0
       max: 10
-agent type: 2
+vision:
+  yaml file location: ../colregs_sim/yaml_files/csv_files/mass_vision.yaml
+vessel types:
+  - Bulkers
+  - Container_Ship
+  - Cruise
+  - Car_Carrier
+  - DDG
+  - Submarine
+  - Tug
+  - Recreational
+  - Sailboat
+agent type: MASS

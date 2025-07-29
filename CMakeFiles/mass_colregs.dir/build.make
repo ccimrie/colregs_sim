@@ -128,19 +128,33 @@ colregs_sim/CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.s"
 	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cci502/software/box2d-master/colregs_sim/src/mass_agent.cpp -o CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.s
 
-colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/flags.make
-colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o: colregs_sim/src/genetic_algorithm.cpp
-colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o"
-	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o -MF CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o.d -o CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o -c /home/cci502/software/box2d-master/colregs_sim/src/genetic_algorithm.cpp
+colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/flags.make
+colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o: colregs_sim/src/vision_unit.cpp
+colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o -MF CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o.d -o CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o -c /home/cci502/software/box2d-master/colregs_sim/src/vision_unit.cpp
 
-colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.i"
-	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cci502/software/box2d-master/colregs_sim/src/genetic_algorithm.cpp > CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.i
+colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.i"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cci502/software/box2d-master/colregs_sim/src/vision_unit.cpp > CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.i
 
-colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.s"
-	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cci502/software/box2d-master/colregs_sim/src/genetic_algorithm.cpp -o CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.s
+colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.s"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cci502/software/box2d-master/colregs_sim/src/vision_unit.cpp -o CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.s
+
+colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/flags.make
+colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o: colregs_sim/src/csv_functions.cpp
+colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o: colregs_sim/CMakeFiles/mass_colregs.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o -MF CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o.d -o CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o -c /home/cci502/software/box2d-master/colregs_sim/src/csv_functions.cpp
+
+colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.i"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cci502/software/box2d-master/colregs_sim/src/csv_functions.cpp > CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.i
+
+colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.s"
+	cd /home/cci502/software/box2d-master/colregs_sim && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cci502/software/box2d-master/colregs_sim/src/csv_functions.cpp -o CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.s
 
 # Object files for target mass_colregs
 mass_colregs_OBJECTS = \
@@ -148,7 +162,8 @@ mass_colregs_OBJECTS = \
 "CMakeFiles/mass_colregs.dir/src/agent.cpp.o" \
 "CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.o" \
 "CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.o" \
-"CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o"
+"CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o" \
+"CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o"
 
 # External object files for target mass_colregs
 mass_colregs_EXTERNAL_OBJECTS =
@@ -157,13 +172,14 @@ bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/src/main.cpp.o
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/src/agent.cpp.o
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.o
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.o
-bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o
+bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o
+bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/build.make
 bin/mass_colregs: bin/libbox2d.a
 bin/mass_colregs: /usr/lib/x86_64-linux-gnu/libpython3.9.so
 bin/mass_colregs: /usr/lib/x86_64-linux-gnu/libyaml-cpp.so.0.6.2
 bin/mass_colregs: colregs_sim/CMakeFiles/mass_colregs.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable ../bin/mass_colregs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/cci502/software/box2d-master/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../bin/mass_colregs"
 	cd /home/cci502/software/box2d-master/colregs_sim && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mass_colregs.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

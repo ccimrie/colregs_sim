@@ -1,0 +1,10 @@
+Vessel Class,Real Height (m),Resolution 640x480,Resolution 480x320,Resolution 320x240,Resolution 240x180
+Bulkers,40,248.9,373.3,497.8,663.7
+Container_Ship,60,373.3,560.0,746.7,995.6
+Cruise,70,435.6,653.3,871.1,1161.5
+Car_Carrier,50,311.1,466.7,622.2,829.6
+DDG,30,186.7,280.0,373.3,497.8
+Submarine,10,62.2,93.3,124.4,165.9
+Tug,15,93.3,140.0,186.7,248.9
+Recreational,6,37.3,56.0,74.7,99.6
+Sailboat,20,124.4,186.7,248.9,331.9

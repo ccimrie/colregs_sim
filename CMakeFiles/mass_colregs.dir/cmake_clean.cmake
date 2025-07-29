@@ -3,14 +3,16 @@ file(REMOVE_RECURSE
   "../bin/mass_colregs.pdb"
   "CMakeFiles/mass_colregs.dir/src/agent.cpp.o"
   "CMakeFiles/mass_colregs.dir/src/agent.cpp.o.d"
-  "CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o"
-  "CMakeFiles/mass_colregs.dir/src/genetic_algorithm.cpp.o.d"
+  "CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o"
+  "CMakeFiles/mass_colregs.dir/src/csv_functions.cpp.o.d"
   "CMakeFiles/mass_colregs.dir/src/main.cpp.o"
   "CMakeFiles/mass_colregs.dir/src/main.cpp.o.d"
   "CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.o"
   "CMakeFiles/mass_colregs.dir/src/mass_agent.cpp.o.d"
   "CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.o"
   "CMakeFiles/mass_colregs.dir/src/normal_agent.cpp.o.d"
+  "CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o"
+  "CMakeFiles/mass_colregs.dir/src/vision_unit.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

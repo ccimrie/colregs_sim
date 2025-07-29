@@ -4,7 +4,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
-agent_colors=distinctipy.get_colors(20)
+current_colour_ind=0
+agent_types={}
+agent_colours=distinctipy.get_colors(20)
+# availble_colours=distinctipy.get_colors(20)
+# agent_colours={}
+
+
 
 def getInd(filename):
     fn=filename.split('.')[0]
@@ -13,7 +19,13 @@ def getInd(filename):
 
 
 def getColour(x_type):
-    return agent_colors[int(x_type)]
+    # global current_colour_ind
+    # if x_type not in agent_colours:
+    #     agent_colours[x_type]=availble_colours[current_colour_ind]
+    #     current_colour_ind=current_colour_ind+1
+    # print(x_type, agent_colours)
+    # print(x_type)
+    return agent_colours[int(x_type)]
 
 
 def updateAgent(agent_ax, agent, t):
@@ -180,9 +192,27 @@ def setupAxes(zoom=False, zoom_mag=0.0):
 
     max_vals=[]
 
-    for file in files:
-        results=np.loadtxt(f'{results_dir}/{file}')
+    def convertRow(val_in):
+        global current_colour_ind
+        val=val_in.decode()
+        try:
+            float(val)
+            return float(val)
+        except ValueError:
+            if val not in agent_types:
+                val_new=current_colour_ind
+                current_colour_ind+=1
+                agent_types[val]=int(val_new)
+            return agent_types[val]
 
+    for file in files:
+        # with open(f'{results_dir}/{file}') as temp_file:
+        #     temp_line=temp_file.readlines()[0].strip().split(' ')
+        # no_attribute=len(temp_line)
+        # cols=tuple(np.arange(no_attribute))
+        # types="f,"*(no_attribute-1)+"U100"
+        results=np.loadtxt(f'{results_dir}/{file}', converters=convertRow)
+        # results=np.reshape(results, (len(results), len(results[0])))
         goal=results[0,7:11]
         found=False
         for key in goals:

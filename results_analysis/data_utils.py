@@ -5,10 +5,13 @@ import pickle
 
 results_dir='../results'
 out_dir="data"
-vessel_breakdown_data_filename="vessel_breakdown_data.pickle"
+agent_types_pickle_name="agent_types.pickle"
 data_filename="fleet_info.npz"
-vessel_types=['agent0', 'pf normal', 'mass agent']
-agent_types=[0,1,2]
+# vessel_types=['agent0', 'pf normal', 'mass agent']
+# agent_types=[0,1,2]
+current_agent_ind=0
+vessel_types=[]
+agent_types={}
 
 def calculateNearMiss(data, tolerance=0.01):
   def checkCollision(vals):
@@ -39,7 +42,7 @@ def avgNeighCount(data):
     results[agent_type]=[-1]*TT
   for t in np.arange(TT):
     for agent_type in agent_types:
-      vals=[v[5] for v in data[t,:,:] if int(v[12])==agent_type]
+      vals=[v[5] for v in data[t,:,:] if int(v[12])==agent_types[agent_type]]
       results[agent_type][t]=np.mean(vals)
   return results
 
@@ -60,14 +63,36 @@ def avgNeighDist(data):
   return results
 
 
-def storeData():
+def storeData(override=False):
+  if os.path.exists(f"{out_dir}/{agent_types_pickle_name}"):
+    global agent_types
+    with open(f"{out_dir}/{agent_types_pickle_name}", 'rb') as handle:
+      agent_types=pickle.load(handle)
+    if os.path.exists(f"{out_dir}/{data_filename}"):
+      print("Data already extracted")
+      return
+  print("\tExtracting raw data...")
   TT=1
   features=13
   data=np.ones((TT,0,features), dtype=float)*-1
   files=os.listdir(results_dir)
   files=[file for file in files if file[-4:]=='.txt']
+
+  def convertRow(val_in):
+    global current_agent_ind
+    val=val_in.decode()
+    try:
+      float(val)
+      return float(val)
+    except ValueError:
+      if val not in agent_types:
+        val_new=current_agent_ind
+        current_agent_ind+=1
+        agent_types[val]=int(val_new)
+      return agent_types[val]
+
   for file in files:
-    new_data=np.loadtxt(f"{results_dir}/{file}")
+    new_data=np.loadtxt(f"{results_dir}/{file}", converters=convertRow)
     start_time=int(new_data[0,11])
     end_time=int(new_data[-1,11])
     if end_time>TT:
@@ -76,9 +101,9 @@ def storeData():
       TT=end_time+1
     data=np.append(data, np.ones([TT, 1, dims[2]])*-1, axis=1)
     data[start_time:end_time+1, -1, :]=new_data
+  with open(f"{out_dir}/{agent_types_pickle_name}", 'wb') as handle:
+    pickle.dump(agent_types, handle, protocol=pickle.HIGHEST_PROTOCOL)
   data=np.savez(f"{out_dir}/{data_filename}", data=data)
-
-
 
 
 def getJourneyTimes(vals):

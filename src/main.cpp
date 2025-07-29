@@ -12,7 +12,7 @@
 #include <normal_agent.h>
 // #include "agent_quad.h"
 // #include "quad_tree.h"
-#include <genetic_algorithm.h>
+// #include <genetic_algorithm.h>
 
 #define PI 3.14159265
 #define THRESH 0.25

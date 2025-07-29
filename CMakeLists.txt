@@ -5,7 +5,9 @@ set (SOURCE_FILES
     src/agent.cpp
     src/normal_agent.cpp
     src/mass_agent.cpp
-    src/genetic_algorithm.cpp
+    src/vision_unit.cpp
+    src/csv_functions.cpp
+    #src/genetic_algorithm.cpp
 )
 
 find_package(PythonLibs REQUIRED)

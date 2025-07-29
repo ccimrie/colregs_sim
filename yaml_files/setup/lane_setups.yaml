@@ -2,29 +2,44 @@ TT: 100000
 goal file: ../colregs_sim/yaml_files/setup/goal_locations.yaml
 results directory: ../colregs_sim/results/
 agents:
-  agent0:
-    N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/lane_0_agent.yaml
-  # submarine:
-  #   N: 5
-  #   yaml file: ../colregs_sim/yaml_files/agents/lane_1_agent.yaml
-  # agent 2:
-  #   N: 1
-  #   yaml file: ../colregs_sim/yaml_files/agents/bad_agent.yaml
- # For testing head on scenarios
-  # agent 3:
-  #   N: 1
-  #   yaml file: ../colregs_sim/yaml_files/agents/opposite_headon_agent.yaml
+  bulkers:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/bulker.yaml
+  container_ship:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/container_ship.yaml
+  cruise:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/cruise.yaml
+  car_carrier:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/car_carrier.yaml
+  ddg:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/ddg.yaml
+  submarine:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/submarine.yaml
+  tug:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/tug.yaml
+  recreational:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/recreational.yaml
+  sailboat:
+    N: 5
+    yaml file: ../colregs_sim/yaml_files/agents/sailboat.yaml
 mass agents:
-  pf normal:
-    N: 2
-    yaml file: ../colregs_sim/yaml_files/agents/pf_normal.yaml
-    goal field weight: 1.0
-    neighbour field weight: 0.1
-    safety bubble: 0.0 
-    results file: mass_output.txt
+  ### Will need to adapt to ignore vision units 
+  # pf normal: 
+  #   N: 2
+  #   yaml file: ../colregs_sim/yaml_files/agents/pf_normal.yaml
+  #   goal field weight: 1.0
+  #   neighbour field weight: 0.1
+  #   safety bubble: 0.0 
+  #   results file: mass_output.txt
   mass agent:
-    N: 0
+    N: 1
     yaml file: ../colregs_sim/yaml_files/agents/mass_agent.yaml
     goal field weight: 1.0
     neighbour field weight: 0.1

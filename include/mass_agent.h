@@ -1,11 +1,37 @@
 #include <agent.h>
-
+#include <vision_unit.h>
 
 class MassAgent : public agent
 {
   public:
     MassAgent();
-    MassAgent(std::string yaml_file, std::string results_file, double seed, double _goal_weight, double _neigh_weight, double _safety_bubble) : agent(yaml_file, results_file, seed){goal_weight=_goal_weight, neigh_weight=_neigh_weight, safety_bubble=_safety_bubble;};
+    MassAgent(std::string yaml_file, std::string results_file, double seed, double _goal_weight, double _neigh_weight, double _safety_bubble) : agent(yaml_file, results_file, seed)
+    {
+      goal_weight=_goal_weight;
+      neigh_weight=_neigh_weight;
+      // safety_bubble=_safety_bubble;
+      YAML::Node config=YAML::LoadFile(yaml_file);
+      if (YAML::Node vision_node=config["vision"])
+      {
+        string vision_config_filename=vision_node["yaml file location"].as<string>();
+        vision=VisionUnit(vision_config_filename);
+      }
+
+      double min_safety_bubble=0.0;
+      double max_safety_bubble=range;
+      std::uniform_real_distribution<double> distribution_theta(min_safety_bubble, max_safety_bubble);
+      std::default_random_engine gen;
+      if (YAML::Node vessel_types_node=config["vessel types"])
+      {
+        YAML::Node::iterator it;
+        for (it=vessel_types_node.begin(); it!=vessel_types_node.end(); ++it)
+        {
+          double safety_bubble_dist=distribution_theta(gen);
+          safety_bubble[it->as<string>()]=safety_bubble_dist;
+        }
+      }
+
+    };
     void updateVel();
     void updateNeighPF(agent* neighbour);
     double getGoalDist(double pos_x, double pos_y);
@@ -14,5 +40,6 @@ class MassAgent : public agent
     double neigh_weight;
     double pf_x_neigh;
     double pf_y_neigh;
-    double safety_bubble;
+    map<string, double> safety_bubble;
+    VisionUnit vision;
 };
