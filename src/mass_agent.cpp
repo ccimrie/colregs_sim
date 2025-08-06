@@ -45,6 +45,11 @@ void MassAgent::updateVel()
 
 void MassAgent::updateNeighPF(agent* neighbour)
 {
+ // Vision perception unit
+  // int true_class=...
+  // int predicted_class=prediction(true_class);
+
+
  // Extract useful information from self/ego
   double pos_x=getBody()->GetPosition().x;
   double pos_y=getBody()->GetPosition().y;  
@@ -59,15 +64,15 @@ void MassAgent::updateNeighPF(agent* neighbour)
   double o_theta=atan2(dist_y, dist_x);
   dist-=(radius+other_radius);
 
- // Vision perception unit
+  // int true_class=neighbour->getAgentType();
   string true_class=neighbour->getAgentType();
-  string predicted_class=vision.predict(true_class, dist+radius);
+  string predict_class=vision.predict(true_class, dist+radius);
 
- // Check if inside safety bubble
+  double bubble_size=safety_bubble[predict_class];
+
   double temp_neigh_weight=neigh_weight;
-  if (dist<safety_bubble[predicted_class]) neigh_weight=10.0; 
+  if (dist<bubble_size) neigh_weight=10.0; 
 
- // Calculate potential fields
   pf_x_neigh+=-neigh_weight*(range-dist)*cos(o_theta);
   pf_y_neigh+=-neigh_weight*(range-dist)*sin(o_theta);
   neigh_weight=temp_neigh_weight;
@@ -85,3 +90,9 @@ double MassAgent::getGoalDist(double pos_x, double pos_y)
   double dist=sqrt(x_dist*x_dist+y_dist*y_dist);
   return dist;
 }
+
+// int predict(string true_class, double distance)
+// {
+//   string p=vision(true_class, distance);
+//   return p;
+// }

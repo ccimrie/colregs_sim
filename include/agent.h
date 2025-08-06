@@ -70,6 +70,11 @@ class agent
     // Neighbour information
     int no_neigh=0;
     double sum_neigh_dist=0.0;
+    // Goal variables
+    double targ_x;
+    double var_x;
+    double targ_y;
+    double var_y;
 
   protected:
     // To initialise agent
@@ -94,11 +99,6 @@ class agent
 
     std::vector<std::vector<double>> forbidden_zones;
 
-    // Goal variables
-    double targ_x;
-    double var_x;
-    double targ_y;
-    double var_y;
     double cmf_dist;
 
     // Velocity rules

@@ -7,7 +7,7 @@ import sys
 from visualise_utils import *
 
 speed=int(sys.argv[1])
-fig, ax, ax_lines, agent_deployed_info, agent_waiting_info, TT=setupAxes()
+fig, ax, ax_lines, agent_deployed_info, agent_waiting_info, TT=setupAxes(axis_lines=True)
 
 def animate(t):
     if t==0:

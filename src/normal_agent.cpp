@@ -42,7 +42,7 @@ void NormalAgent::updateVel(agent* neighbour)
   double dist=sqrt(dist_x*dist_x+dist_y*dist_y);
   dist-=(radius+neigh_radius);
 
-  if (dist>min_dist) return;
+  // if (dist>min_dist) return;
 
  // Other vessel's relative position in ego's reference frame
   double neigh_ego_relative_pos_x=(cos(-heading)*dist_x-sin(-heading)*dist_y);
@@ -79,6 +79,17 @@ void NormalAgent::updateVel(agent* neighbour)
   int time_collision=checkFuture(lookahead_time, neigh_pos_x, neigh_pos_y, neigh_vel_mag, neigh_theta, neigh_radius);
 
  // Situation identification
+  // Overtaking
+  // if (!updated && neigh_ego_relative_theta<67.5*(PI/180.0) && neigh_ego_relative_theta>-67.5*(PI/180.0) && radius>neigh_radius
+  if (neigh_ego_relative_theta<67.5*(PI/180.0) && neigh_ego_relative_theta>-67.5*(PI/180.0) && radius>neigh_radius 
+          && (heading_diff_ego_frame<PI/4 || heading_diff_ego_frame>2*PI*3/4.0))
+  {
+    updated=overTakingUpdate(neigh_ego_relative_pos_x, neigh_ego_relative_pos_y, dist, neigh_radius, neigh_vel_mag, time_collision);
+    // updated=true;
+  } 
+
+  // if (time_collision<0) return;
+
   // Oncoming scenario 
   if (heading_diff_ego_frame>oncoming_thresh_min && heading_diff_ego_frame<oncoming_thresh_max)
   {
@@ -86,62 +97,36 @@ void NormalAgent::updateVel(agent* neighbour)
     // updated=true;
   }
 
-  // Crossing?
-  if (!updated && neigh_ego_relative_pos_x>0 && neigh_ego_relative_pos_y<neigh_radius && (heading_diff_ego_frame>PI*1/4.0 && heading_diff_ego_frame<PI*3/4.0))
+  // Crossing
+  // if (!updated && neigh_ego_relative_pos_x>0 && neigh_ego_relative_pos_y<neigh_radius && (heading_diff_ego_frame>PI*1/4.0 && heading_diff_ego_frame<PI*3/4.0))
+  if (neigh_ego_relative_pos_x>0 && neigh_ego_relative_pos_y<neigh_radius && (heading_diff_ego_frame>PI*1/4.0 && heading_diff_ego_frame<PI*3/4.0))
   {
     // if (time_collision>0) printf("In crossing event collision will occur in %i timesteps\n", time_collision);
     updated=crossingUpdate(neigh_ego_relative_pos_x, neigh_ego_relative_pos_y, dist, neigh_radius, time_collision);
-    if (updated && time_collision>1) printf("In crossing event collision will occur in %i timesteps\n", time_collision);
+    // if (updated && time_collision>1) printf("In crossing event collision will occur in %i timesteps\n", time_collision);
   }
 
-  // Overtaking
-  if (!updated && neigh_ego_relative_theta<67.5*(PI/180.0) && neigh_ego_relative_theta>-67.5*(PI/180.0) && radius>neigh_radius 
-          && (heading_diff_ego_frame<PI/4 || heading_diff_ego_frame>2*PI*3/4.0))
-  {
-    updated=overTakingUpdate(neigh_ego_relative_pos_x, neigh_ego_relative_pos_y, dist, neigh_radius, neigh_vel_mag, time_collision);
-    // updated=true;
-  } 
-  if (!updated && neigh_ego_relative_pos_x>-neigh_radius && dist<cmf_dist)
-  {
-    double turn_angle=atan2(dist_y, dist_x);
-    new_theta_acc=-turn_angle;
-    updated=true;
-  }
+  // if (!updated && neigh_ego_relative_pos_x>-neigh_radius && dist<cmf_dist)
+  // if (neigh_ego_relative_pos_x>-neigh_radius && dist<cmf_dist)
+  // {
+  //   double turn_angle=atan2(dist_y, dist_x);
+  //   new_theta_acc=-turn_angle;
+  //   updated=true;
+  // }
 
-  if (time_collision>0)
+  if (time_collision>1)
   {
     double max_crash_time=600.0;
-    double temp_vel_mag=vel_max*(time_collision/max_crash_time);
+    double offset_vel=1;
+    double temp_vel_mag=(vel_mag*time_collision)/(max_crash_time*offset_vel);
     if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
   }
-  else
-  {
-    double temp_vel_mag=vel_max*(dist/(range-radius-neigh_radius));
-  }
-  if (updated) min_dist=dist;
-
-  // Check for general problems; is there a ship infront of us (just slow down for now?)
-  // else if (neigh_ego_relative_pos_x>-neigh_radius && dist<cmf_dist)
-  // {
-  //   // double temp_vel_mag=vel_max*((dist-cmf_dist)/(range-radius-neigh_radius));
-  //   // temp_vel_mag=std::max(temp_vel_mag, 0.0);
-  //   // if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
-  //   // double force=(cmf_dist/dist);
-  //   double pf_pos_x=(pos_x-neigh_pos_x);
-  //   double pf_pos_y=(pos_y-neigh_pos_y);
-
-  //   double new_theta=atan2(pf_pos_y, pf_pos_x);
-  //   double temp_theta_acc=heading-new_theta;
-  //   if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
-
-  // }
   // else
   // {
-  //   double temp_vel_mag=vel_max*((dist-cmf_dist)/(range-radius-neigh_radius));
-  //   temp_vel_mag=std::max(temp_vel_mag, 0.0);
-  //   if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
+  //   double temp_vel_mag=vel_max*(dist/(range-radius-neigh_radius));
   // }
- // Distance from forbidden zones 
+  // if (updated) min_dist=dist;
+
 }
 
 int NormalAgent::checkFuture(int lookahead_time, double neigh_pos_x, double neigh_pos_y, double neigh_vel_mag, double neigh_theta, double neigh_radius)
@@ -176,7 +161,7 @@ int NormalAgent::checkFuture(int lookahead_time, double neigh_pos_x, double neig
 
 bool NormalAgent::oncomingUpdate(double other_targ_relative_pos_x, double other_targ_relative_pos_y, double dist, double other_radius, int time_collision)
 {
-  if (time_collision<0) return false;
+  if (time_collision<1) return false;
  // Get new target point
   double temp_theta_acc;
 
@@ -186,13 +171,7 @@ bool NormalAgent::oncomingUpdate(double other_targ_relative_pos_x, double other_
   double heading=body->GetAngle()*(PI/180.0);    
   temp_theta_acc=(oncoming_goal_theta-heading);
 
-  // if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
-  new_theta_acc=temp_theta_acc;
-
-  double max_crash_time=600.0;
-  // double temp_vel_mag=vel_mag*(time_collision/max_crash_time);
-  double temp_vel_mag=vel_max*(1-abs(oncoming_goal_theta-heading)/oncoming_goal_theta);
-  if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
+  if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
   return true;
 }
 
@@ -207,23 +186,11 @@ bool NormalAgent::overTakingUpdate(double other_pos_x, double other_pos_y, doubl
       double heading=body->GetAngle()*(PI/180.0);    
       double temp_theta_acc=(overtaking_goal_theta-heading);
 
-      
-
       // if (other_pos_x<radius+other_radius && other_pos_y<0) temp_theta_acc*=-1;    
-      // if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
-      new_theta_acc=temp_theta_acc;
-
-      double temp_vel_mag=vel_max;
-      if (time_collision>0)
-      {
-        double max_crash_time=6.0e2;
-        // double temp_vel_mag=vel_mag*(time_collision/max_crash_time);
-        double temp_vel_mag=vel_max*(1-abs(overtaking_goal_theta-heading)/overtaking_goal_theta);
-      }
-      if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
+      if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
       return true;
     }
-   // If going faster than smaller ship slow appropriately
+   // If going faster than larger ship slow appropriately
     else if (new_vel_mag>other_vel_mag) 
     {
       new_vel_mag=other_vel_mag;
@@ -247,27 +214,18 @@ bool NormalAgent::makeWayUpdate(double o_relative_theta, double other_radius)
 
 bool NormalAgent::crossingUpdate(double other_pos_x, double other_pos_y, double dist, double other_radius, int time_collision)
 {
-  double temp_vel_mag=vel_max;
-  if (time_collision>0)
-  {  
-    // double frame_theta=targAngle();
-    double frame_theta=egoAngle();
-    double crossing_goal_theta=newAngleWorldFrame(other_pos_x, other_pos_y, other_radius, frame_theta);
-    
-    double heading=body->GetAngle()*(PI/180.0);    
-    double temp_theta_acc=(crossing_goal_theta-heading);
-    
-    // if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
-    new_theta_acc=temp_theta_acc;
+  if (time_collision<1) return false;
+
+  // double frame_theta=targAngle();
+  double frame_theta=egoAngle();
+  double crossing_goal_theta=newAngleWorldFrame(other_pos_x, other_pos_y, other_radius, frame_theta);
   
-    double max_crash_time=6.0e2;
-    // double temp_vel_mag=vel_mag*(time_collision/max_crash_time);
-    double temp_vel_mag=vel_max*(1-abs(crossing_goal_theta-heading)/crossing_goal_theta);
-    temp_vel_mag=std::max(temp_vel_mag,0.01);
-    if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
-    return true;
-  }
-  return false;
+  double heading=body->GetAngle()*(PI/180.0);    
+  double temp_theta_acc=(crossing_goal_theta-heading);
+  
+  if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
+  // new_theta_acc=temp_theta_acc;
+  return true;
 }
 
 double NormalAgent::newAngleWorldFrame(double other_pos_x, double other_pos_y, double other_radius, double frame_theta)
@@ -277,12 +235,35 @@ double NormalAgent::newAngleWorldFrame(double other_pos_x, double other_pos_y, d
 
  // Get new target point
   double new_frame_goal_x=other_pos_x;
-  double new_frame_goal_y=other_pos_y-(2*other_radius);
+  double new_frame_goal_y=other_pos_y-2*(other_radius+radius);
 
-  double new_goal_x=cos(frame_theta)*new_frame_goal_x-sin(frame_theta)*new_frame_goal_y+pos_x;
-  double new_goal_y=sin(frame_theta)*new_frame_goal_x+cos(frame_theta)*new_frame_goal_y+pos_y;
+  double new_goal_x=cos(-frame_theta)*new_frame_goal_x-sin(-frame_theta)*new_frame_goal_y+pos_x;
+  double new_goal_y=sin(-frame_theta)*new_frame_goal_x+cos(-frame_theta)*new_frame_goal_y+pos_y;
   
   double new_goal_theta=atan2(new_goal_y, new_goal_x);
 
   return new_goal_theta;
 }
+
+  // Check for general problems; is there a ship infront of us (just slow down for now?)
+  // else if (neigh_ego_relative_pos_x>-neigh_radius && dist<cmf_dist)
+  // {
+  //   // double temp_vel_mag=vel_max*((dist-cmf_dist)/(range-radius-neigh_radius));
+  //   // temp_vel_mag=std::max(temp_vel_mag, 0.0);
+  //   // if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
+  //   // double force=(cmf_dist/dist);
+  //   double pf_pos_x=(pos_x-neigh_pos_x);
+  //   double pf_pos_y=(pos_y-neigh_pos_y);
+
+  //   double new_theta=atan2(pf_pos_y, pf_pos_x);
+  //   double temp_theta_acc=heading-new_theta;
+  //   if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
+
+  // }
+  // else
+  // {
+  //   double temp_vel_mag=vel_max*((dist-cmf_dist)/(range-radius-neigh_radius));
+  //   temp_vel_mag=std::max(temp_vel_mag, 0.0);
+  //   if (temp_vel_mag<new_vel_mag) new_vel_mag=temp_vel_mag;
+  // }
+ // Distance from forbidden zones 

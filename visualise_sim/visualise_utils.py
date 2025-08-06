@@ -163,22 +163,31 @@ def setUpSimAxesOnly(zoom_mag, goals, max_vals, colour=None):
 
     return fig, ax, ax_zoom
 
-def setupAxes(zoom=False, zoom_mag=0.0):
+def setupAxes(zoom=False, axis_lines=False, zoom_mag=0.0, bounds=None):
     results_dir='../results'
     files=os.listdir(results_dir)
     files=[file for file in files if file[-4:]=='.txt']
     fig=plt.figure()
     axs=[]
-
+    # print("Value of zoom: ", zoom)
     if zoom:
-        gs=fig.add_gridspec(2, 3)
-        ax=fig.add_subplot(gs[0,0:2])
-        ax_lines=fig.add_subplot(gs[:,2])
-        ax_zoom=fig.add_subplot(gs[1,0:2])
+        if axis_lines:
+            gs=fig.add_gridspec(2, 3)
+            ax=fig.add_subplot(gs[0,0:2])
+            ax_lines=fig.add_subplot(gs[:,2])
+            ax_zoom=fig.add_subplot(gs[1,0:2])
+        else: 
+            gs=fig.add_gridspec(2, 2)
+            ax=fig.add_subplot(gs[0,:])
+            ax_zoom=fig.add_subplot(gs[1,:])
     else:
         gs=fig.add_gridspec(2, 2)
-        ax=fig.add_subplot(gs[:,0])
-        ax_lines=fig.add_subplot(gs[:,1])
+        if axis_lines:
+            ax=fig.add_subplot(gs[:,0])
+            ax_lines=fig.add_subplot(gs[:,1])
+        else: 
+            ax=fig.add_subplot(gs[:,:])
+
     # output=[]
     # agents=[]
     # agents_zoom=[]
@@ -237,17 +246,25 @@ def setupAxes(zoom=False, zoom_mag=0.0):
             agent_waiting_info[file]=results
         # output.append(results)
         max_vals.append([np.max(results[:,0]), np.min(results[:,0]), np.max(results[:,1]), np.min(results[:,1]), int(results[-1,11])])
-        ax_lines.plot(results[:,0], results[:,1], c=getColour(results[0,-1]), zorder=10)
+        if axis_lines:
+            ax_lines.plot(results[:,0], results[:,1], c=getColour(results[0,-1]), zorder=10)
 
-    buffer=1.5
-    # x_max=buffer+np.max(np.array([np.max(arr[:,0]) for arr in output]))
-    # x_min=-buffer+np.min(np.array([np.min(arr[:,0]) for arr in output])) 
-    # y_max=buffer+np.max(np.array([np.max(arr[:,1]) for arr in output]))
-    # y_min=-buffer+np.min(np.array([np.min(arr[:,1]) for arr in output]))
-    x_max=buffer+np.max(np.array(max_vals)[:,0])
-    x_min=-buffer+np.min(np.array(max_vals)[:,1])
-    y_max=buffer+np.max(np.array(max_vals)[:,2])
-    y_min=-buffer+np.min(np.array(max_vals)[:,3])
+    if bounds is None:
+        buffer=1.5
+        # x_max=buffer+np.max(np.array([np.max(arr[:,0]) for arr in output]))
+        # x_min=-buffer+np.min(np.array([np.min(arr[:,0]) for arr in output])) 
+        # y_max=buffer+np.max(np.array([np.max(arr[:,1]) for arr in output]))
+        # y_min=-buffer+np.min(np.array([np.min(arr[:,1]) for arr in output]))
+        x_max=buffer+np.max(np.array(max_vals)[:,0])
+        x_min=-buffer+np.min(np.array(max_vals)[:,1])
+        y_max=buffer+np.max(np.array(max_vals)[:,2])
+        y_min=-buffer+np.min(np.array(max_vals)[:,3])
+    else:
+        x_min=bounds[0,0]
+        x_max=bounds[0,1]
+        y_min=bounds[1,0]
+        y_max=bounds[1,1]
+    print(x_min, x_max)
     TT=np.max(np.array(max_vals)[:,4])
 
     ## Plot agents's goal locations
@@ -265,19 +282,21 @@ def setupAxes(zoom=False, zoom_mag=0.0):
         temp_goal_area_zoom=plt.Rectangle(rect_start_xy,width,height,fc=getColour(goal_type), alpha=0.3, zorder=1)
         temp_goal_area_lines=plt.Rectangle(rect_start_xy,width,height,fc=getColour(goal_type), alpha=0.3, zorder=1)
         ax.add_patch(temp_goal_area_reg)
-        ax_lines.add_patch(temp_goal_area_lines)
+        if axis_lines:
+            ax_lines.add_patch(temp_goal_area_lines)
         if zoom:
             ax_zoom.add_patch(temp_goal_area_zoom)
 
       ## Track max/min positions for plotting
-        if start_x<x_min:
-            x_min=start_x 
-        if end_x>x_max:
-            x_max=end_x 
-        if start_y<y_min:
-            y_min=start_y 
-        if end_y>y_max:
-            y_max=end_y 
+        if bounds is None:
+            if start_x<x_min:
+                x_min=start_x 
+            if end_x>x_max:
+                x_max=end_x 
+            if start_y<y_min:
+                y_min=start_y 
+            if end_y>y_max:
+                y_max=end_y 
 
     water_background_colour=np.array([214,239,255])/255.0
     ax.set_facecolor(water_background_colour)
@@ -296,7 +315,12 @@ def setupAxes(zoom=False, zoom_mag=0.0):
         ax_zoom.set_xlim([zoom_mag*x_min,zoom_mag*x_max])
         ax_zoom.set_ylim([zoom_mag*y_min,zoom_mag*y_max])
         ax_zoom.set_aspect('equal')
-        return fig, ax, ax_zoom, ax_lines, agent_deployed_info, agent_waiting_info, TT 
-    else:
+        if axis_lines:
+            return fig, ax, ax_zoom, ax_lines, agent_deployed_info, agent_waiting_info, TT 
+        else:
+            return fig, ax, ax_zoom, agent_deployed_info, agent_waiting_info, TT
+    elif axis_lines:
         return fig, ax, ax_lines, agent_deployed_info, agent_waiting_info, TT
+    else:
+        return fig, ax, agent_deployed_info, agent_waiting_info, TT
     # return fig, ax, ax_zoom, ax_lines, agents, agents_zoom, output

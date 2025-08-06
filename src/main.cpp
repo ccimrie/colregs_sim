@@ -110,6 +110,8 @@ int main(int argc, const char* argv[])
     const int TT=config["TT"].as<int>();
     const string results_dir=config["results directory"].as<string>();
 
+    bool lane_setup=config["lanes setup"].as<bool>();
+
     B2_NOT_USED(argc);
     B2_NOT_USED(argv);
 
@@ -164,15 +166,28 @@ int main(int argc, const char* argv[])
         double seed=distribution_seeds(gen);
         colregs.push_back(NormalAgent(agent_yaml_file, results_file, seed));
 
-        int start_loc=choice(dev);
 
-        double init_x=goal_locations[start_loc][0]+(1-2*drand48())*goal_locations[start_loc][2];
-        double init_y=goal_locations[start_loc][1]+(1-2*drand48())*goal_locations[start_loc][2];
-        double init_theta=(1-2*drand48())*PI;
+        setGoal(&colregs.back(), goal_locations, choice(dev));
+
+        double init_x, init_y, init_theta;
+
+        if (lane_setup)
+        {
+          init_x=colregs.back().targ_x*-1+(1-2*drand48())*(colregs.back().var_x*10);
+          init_y=colregs.back().targ_y+(1-2*drand48())*(colregs.back().var_y);
+          // init_theta=(1-2*drand48())*PI;
+          init_theta=atan2(colregs.back().targ_y, colregs.back().targ_x)*180.0/PI;
+        }
+        else
+        {
+          int start_loc=choice(dev);
+          init_x=goal_locations[start_loc][0]+(1-2*drand48())*goal_locations[start_loc][2];
+          init_y=goal_locations[start_loc][1]+(1-2*drand48())*goal_locations[start_loc][2];
+          init_theta=(1-2*drand48())*180.0;
+        }
 
         colregs.back().setBodyDefPose(init_x, init_y, init_theta);
 
-        setGoal(&colregs.back(), goal_locations, choice(dev));
 
         b2BodyDef temp_body=colregs.back().getBodyDef();
         colregs.back().setBody(world.CreateBody(&temp_body));
