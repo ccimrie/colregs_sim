@@ -29,13 +29,6 @@ def nearMissMatrix(data, tolerance=0.001, data_override=False):
     diff=others-pos
     dist=np.sqrt(diff[:,0]**2+diff[:,1]**2)-vals[0,3]-vals[1:,3]
     
-    # if agent_types[v_type]=='Bulkers' and np.sum(dist<tolerance)>0:
-    #   print(f"Bulkers collisions: {np.sum(dist<tolerance)}")
-    #   indices=np.where(dist<tolerance)
-    #   for i in indices:
-    #     print(f"\t- {int(vals[i,-1])}: {agent_types[int(vals[i,-1])]}")
-    # else:
-    #   print(agent_types[v_type])
     for ind in np.arange(len(dist)):
       if dist[ind]<tolerance:
         mat[v_type, int(vals[ind,-1])]+=1
