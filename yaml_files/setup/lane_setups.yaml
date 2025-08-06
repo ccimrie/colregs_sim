@@ -1,47 +1,50 @@
 TT: 10000
-# goal file: ../colregs_sim/yaml_files/setup/goal_locations.yaml
-goal file: ../colregs_sim/yaml_files/setup/lane_goals.yaml
-results directory: ../colregs_sim/results/
+# goal file: ../../colregs_sim/yaml_files/setup/goal_locations.yaml
+
+# define: &colregs_dir '../../colregs_sim' 
+
+goal file: ../../colregs_sim/yaml_files/setup/lane_goals.yaml
+results directory: ../../colregs_sim/results/
 agents:
   bulkers:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/bulker.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/bulker.yaml
   container_ship:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/container_ship.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/container_ship.yaml
   cruise:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/cruise.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/cruise.yaml
   car_carrier:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/car_carrier.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/car_carrier.yaml
   ddg:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/ddg.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/ddg.yaml
   submarine:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/submarine.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/submarine.yaml
   tug:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/tug.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/tug.yaml
   recreational:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/recreational.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/recreational.yaml
   sailboat:
     N: 10
-    yaml file: ../colregs_sim/yaml_files/agents/sailboat.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/sailboat.yaml
 mass agents:
   ### Will need to adapt to ignore vision units 
   # pf normal: 
   #   N: 2
-  #   yaml file: ../colregs_sim/yaml_files/agents/pf_normal.yaml
+  #   yaml file: ../../colregs_sim/yaml_files/agents/pf_normal.yaml
   #   goal field weight: 1.0
   #   neighbour field weight: 0.1
   #   safety bubble: 0.0 
   #   results file: mass_output.txt
   mass agent:
     N: 0
-    yaml file: ../colregs_sim/yaml_files/agents/mass_agent.yaml
+    yaml file: ../../colregs_sim/yaml_files/agents/mass_agent.yaml
     goal field weight: 1.0
     neighbour field weight: 0.1
     safety bubble: 1.0 
