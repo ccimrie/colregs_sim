@@ -3,4 +3,4 @@
 *.png
 *.mp4
 *.pickle
-*temp_output*.csv
+*test_output/*.csv
