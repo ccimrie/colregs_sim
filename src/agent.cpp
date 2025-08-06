@@ -312,6 +312,12 @@ void agent::recordStep(int t)
   //   - 10: y-target tolerance
   //   - 11: current world timestep
   //   - 12: agent type (for plotting and analysis)
+  double avg_neigh_dist=range;
+  if (no_neigh>0) avg_neigh_dist=sum_neigh_dist/no_neigh;
+  if (avg_neigh_dist!=avg_neigh_dist)
+  {
+    printf("\tProblem:\n\t\t- %f\n\t\t- %f\n\n", sum_neigh_dist, no_neigh);
+  }
   outfile.open(filename, std::ios_base::app);
   outfile << body->GetPosition().x  << " " 
           << body->GetPosition().y << " " 
@@ -319,7 +325,7 @@ void agent::recordStep(int t)
           << radius << " "
           << range << " "
           << no_neigh << " "
-          << sum_neigh_dist/no_neigh << " "
+          << avg_neigh_dist << " "
           << targ_x << " "
           << var_x << " "
           << targ_y << " "
