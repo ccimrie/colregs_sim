@@ -12,11 +12,51 @@ neigh_dist_data_filename="neigh_dist_info.pickle"
 neigh_count_data_filename="neigh_count_info.pickle"
 
 near_miss_data_filename="near_miss_info.npz"
-# vessel_types=['agent0', 'pf normal', 'mass agent']
-# agent_types=[0,1,2]
+near_miss_matrix_data_filename="near_miss_matrix.npz"
 current_agent_ind=0
 vessel_types=[]
 agent_types={}
+
+def nearMissMatrix(data, tolerance=0.001, data_override=False):
+  if not data_override and os.path.exists(f"{out_dir}/{near_miss_matrix_data_filename}"):
+    results=np.load(f"{out_dir}/{near_miss_matrix_data_filename}")['near_miss_matrix']
+    return results
+  def checkCollision(vals, mat):
+    ego=vals[0]
+    v_type=int(ego[-1])
+    others=vals[1:,0:2]
+    pos=ego[0:2]
+    diff=others-pos
+    dist=np.sqrt(diff[:,0]**2+diff[:,1]**2)-vals[0,3]-vals[1:,3]
+    
+    # if agent_types[v_type]=='Bulkers' and np.sum(dist<tolerance)>0:
+    #   print(f"Bulkers collisions: {np.sum(dist<tolerance)}")
+    #   indices=np.where(dist<tolerance)
+    #   for i in indices:
+    #     print(f"\t- {int(vals[i,-1])}: {agent_types[int(vals[i,-1])]}")
+    # else:
+    #   print(agent_types[v_type])
+    for ind in np.arange(len(dist)):
+      if dist[ind]<tolerance:
+        mat[v_type, int(vals[ind,-1])]+=1
+        mat[int(vals[ind,-1]), v_type]+=1
+    ## Remove if in constant collision?
+    return mat
+
+  no_agent_types=len(agent_types)
+  near_miss_mat=np.zeros([no_agent_types, no_agent_types])
+  TT=len(data)
+  agent_num=data.shape[1]
+  for t in np.arange(TT):
+    for v in np.arange(agent_num):
+      near_miss_mat=checkCollision(data[t][v:], near_miss_mat)
+
+    # near_miss_mat=[checkCollision(data[t][v:]) for v in np.arange(agent_num)]
+
+  np.savez(f"{out_dir}/{near_miss_matrix_data_filename}", near_miss_matrix=near_miss_mat)
+
+  return near_miss_mat
+
 
 def calculateNearMiss(data, tolerance=0.001, data_override=False):
   if not data_override and os.path.exists(f"{out_dir}/{near_miss_data_filename}"):
@@ -51,18 +91,13 @@ def calculateNearMiss(data, tolerance=0.001, data_override=False):
 
     if v_ind>-1:
       ego=data[t][v_ind]
-      # print(v_ind)
-      # print(ego)
       others=np.delete(data[t], v_ind, axis=0)
-      # print(np.shape(others))
-      # others=others[:,0:2]
       pos=ego[0:2]
       diff=others[:,0:2]-pos
       dist=np.sqrt(diff[:,0]**2+diff[:,1]**2)-data[t][v_ind][3]-others[:,3]
       ## Remove if in constant collision?
       mass_collisions+=np.sum(dist<tolerance)
   print(f"Collision ratio: {test_t} {mass_collisions}/{np.sum(near_collisions)}")
-
   return near_collisions
 
 
@@ -110,7 +145,7 @@ def avgNeighDist(data, data_override=False):
     results[agent_type]=[-1]*TT
   for t in np.arange(TT):
     for agent_type in agent_types:
-      vals=[v[6] for v in data[t,:,:] if (v[12]==agent_type and v[5]>0)]
+      vals=[v[6] for v in data[t,:,:] if (v[12]==agent_type)]# and v[5]>0)]
       results[agent_type][t]=np.mean(vals)
   # np.savez(f"{out_dir}/{neigh_dist_data_filename}", avg_neigh_dist=results)
   with open(f"{out_dir}/{neigh_dist_data_filename}", 'wb') as handle:
