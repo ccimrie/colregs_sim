@@ -64,13 +64,13 @@ for agent_type in agent_types:
 # collisions=calculateNearMiss(data, data_override=data_override)
 # collisions_total=np.cumsum(collisions)
 near_miss_mat=nearMissMatrix(data, data_override=data_override)
-print(near_miss_mat)
+# print(near_miss_mat)
 for agent_type in agent_types:
   collisions_dict[agent_type]=np.sum(near_miss_mat[agent_type])
   for collision in np.arange(len(near_miss_mat[agent_type])):
     near_miss_mat_dict[agent_type][collision]+=near_miss_mat[agent_type][collision]
 results_dict['Near misses']=collisions_dict
-print(results_dict)
+# print(results_dict)
 
 print(f"Acquired collision count")
 
