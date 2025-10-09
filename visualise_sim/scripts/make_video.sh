@@ -1,3 +1,8 @@
+if [ !-d "output_video" ]; then
+  printf "Creating output_video directory\n"
+  mkdir output_video
+fi
+
 rm output_video/temp_image*
 printf "Creating frames:"
 printf "\t- Start frame: $1\n"
