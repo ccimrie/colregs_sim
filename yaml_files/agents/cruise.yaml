@@ -9,8 +9,8 @@ initial pose:
     min: -185
     max: -175
 size: 
-  max: 2.0
-  min: 1.0
+  max: 2.75
+  min: 2.6
 vel-size ratio: 
   linear: 5.0
   angular: 1.0
@@ -30,4 +30,4 @@ forbidden zones:
     y:
       min: 0
       max: 10
-agent type: vessel_a
+agent type: Cruise

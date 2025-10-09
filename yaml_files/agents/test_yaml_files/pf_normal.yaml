@@ -9,7 +9,7 @@ initial pose:
     min: 90
     max: 90
 size: 
-  max: 0.5
+  max: 3.0
   min: 0.5
 vel-size ratio: 
   linear: 0.5
@@ -30,16 +30,4 @@ forbidden zones:
     y:
       min: 0
       max: 10
-vision:
-  yaml file location: ${SIM_DIR_PATH}/yaml_files/csv_files/mass_vision.yaml
-vessel types:
-  - Bulkers
-  - Container_Ship
-  - Cruise
-  - Car_Carrier
-  - DDG
-  - Submarine
-  - Tug
-  - Recreational
-  - Sailboat
-agent type: MASS
+agent type: 1

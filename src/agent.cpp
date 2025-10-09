@@ -4,6 +4,7 @@
 #include <time.h>
 #include <iostream>
 #include <vector>
+#include <regex>
 #include <string.h>
 #include <fstream>
 #include <random>
@@ -14,12 +15,14 @@
 
 #define PI 3.14159265
 
+using namespace std;
+
 agent::agent()
 {
   // EMPTY CONSTRUCTOR
 }
 
-agent::agent(std::string _yaml_file, std::string results_file, double _seed)
+agent::agent(string _yaml_file, string results_file, double _seed)
 {
   yaml_file=_yaml_file;
   seed=_seed;
@@ -42,17 +45,17 @@ void agent::initialiseAgent()
   const double y_max=config["initial pose"]["y"]["max"].as<double>();
   const double theta_min=config["initial pose"]["theta"]["min"].as<double>();
   const double theta_max=config["initial pose"]["theta"]["max"].as<double>();
-  std::uniform_real_distribution<double> distribution_x(x_min, x_max);
-  std::uniform_real_distribution<double> distribution_y(y_min, y_max);
-  std::uniform_real_distribution<double> distribution_theta(theta_min, theta_max);
+  uniform_real_distribution<double> distribution_x(x_min, x_max);
+  uniform_real_distribution<double> distribution_y(y_min, y_max);
+  uniform_real_distribution<double> distribution_theta(theta_min, theta_max);
   // printf("Loaded agent's yaml file\n");
 
   // srand48(time(NULL));
-  std::default_random_engine gen;
+  default_random_engine gen;
   gen.seed(seed);
-  double pos_x=distribution_x(gen);
-  double pos_y=distribution_y(gen);
-  double _angle=distribution_theta(gen);
+  float pos_x=distribution_x(gen);
+  float pos_y=distribution_y(gen);
+  float _angle=distribution_theta(gen);
 
   // Box2D particle parameters
   body_def=b2DefaultBodyDef();
@@ -65,14 +68,14 @@ void agent::initialiseAgent()
  // Initialise agent's size, vel, and range
   double size_min=config["size"]["min"].as<double>();
   double size_max=config["size"]["max"].as<double>();
-  std::uniform_real_distribution<double> distribution_size(size_min, size_max);
+  uniform_real_distribution<double> distribution_size(size_min, size_max);
   radius=distribution_size(gen);
 
  // Robot sensor parameters
   range=radius*config["range-size ratio"].as<double>();
   vel_max=radius*config["vel-size ratio"]["linear"].as<double>();
   vel_theta_max=config["vel-size ratio"]["angular"].as<double>()/radius;
-  agent_type=config["agent type"].as<std::string>();
+  agent_type=config["agent type"].as<string>();
 
  // Set target
   targ_x=config["goal pose"]["x"]["target"].as<double>();
@@ -86,14 +89,26 @@ void agent::initialiseAgent()
   YAML::Node fz=config["fobidden zones"];
   for(YAML::const_iterator it=fz.begin(); it!=fz.end(); ++it)
   {
-    std::string key=it->first.as<std::string>();         // <- key
-    std::vector<double> fz_coords;
+    string key=it->first.as<string>();         // <- key
+    vector<double> fz_coords;
     fz_coords.push_back(fz[key]["x"]["min"].as<double>());
     fz_coords.push_back(fz[key]["x"]["max"].as<double>());
     fz_coords.push_back(fz[key]["y"]["min"].as<double>());
     fz_coords.push_back(fz[key]["y"]["max"].as<double>());
     forbidden_zones.push_back(fz_coords);
   }
+}
+
+string agent::parseYAMLENV(string yaml_line)
+{
+  auto const env_regex=regex("\\$\\{.*\\}");
+  smatch env_match;
+  regex_search(yaml_line, env_match, env_regex);
+  string env_var=env_match[0];
+  string env_val=getenv(env_var.data());
+  string parsed_line;
+  regex_replace(back_inserter(parsed_line), yaml_line.begin(), yaml_line.end(), env_regex, env_val);
+  return parsed_line;
 }
 
 double agent::targAngle()
@@ -120,13 +135,13 @@ void agent::setBodyID(b2BodyId _bodyID)
   bodyID=_bodyID;
 }
 
-void agent::setBodyDefPose(double _x_pos, double _y_pos, double _theta)
+void agent::setBodyDefPose(float _x_pos, float _y_pos, float _theta)
 { 
   body_def.position=(b2Vec2){_x_pos, _y_pos};
   body_def.rotation=b2MakeRot(_theta);
 }
 
-void agent::setBodyPosition(double _x_pos, double _y_pos)
+void agent::setBodyPosition(float _x_pos, float _y_pos)
 {
   b2Vec2 position=(b2Vec2){_x_pos, _y_pos};//b2Body_GetPosition(getBodyID());
   b2Rot rotation=b2Body_GetRotation(getBodyID());
@@ -139,7 +154,7 @@ b2BodyId agent::getBodyID()
   return bodyID;
 }
 
-double agent::getVelX()
+float agent::getVelX()
 {
   // return velX;
   b2Rot rotation=b2Body_GetRotation(getBodyID());
@@ -147,7 +162,7 @@ double agent::getVelX()
   return cos(theta)*vel_mag;
 }
 
-double agent::getVelY()
+float agent::getVelY()
 {
   // return velY;
   b2Rot rotation=b2Body_GetRotation(getBodyID());
@@ -305,7 +320,7 @@ void agent::agentNeighReset()
   sum_neigh_dist=range;
 }
 
-std::string agent::getAgentType()
+string agent::getAgentType()
 {
   return agent_type;
 }
@@ -329,17 +344,17 @@ void agent::recordStep(int t)
   //   - 12: agent type (for plotting and analysis)
   double avg_neigh_dist=range;
   if (no_neigh>0) avg_neigh_dist=sum_neigh_dist/no_neigh;
-  if (avg_neigh_dist!=avg_neigh_dist)
-  {
-    printf("\tProblem:\n\t\t- %f\n\t\t- %f\n\n", sum_neigh_dist, no_neigh);
-  }
+  // if (avg_neigh_dist!=avg_neigh_dist)
+  // {
+  //   printf("\tProblem:\n\t\t- %f\n\t\t- %f\n\n", sum_neigh_dist, no_neigh);
+  // }
   b2Vec2 position=b2Body_GetPosition(getBodyID());
   double pos_x=position.x;
   double pos_y=position.y;
   b2Rot rotation=b2Body_GetRotation(getBodyID());
   double heading=b2Rot_GetAngle(rotation);
 
-  outfile.open(filename, std::ios_base::app);
+  outfile.open(filename, ios_base::app);
   outfile << pos_x  << " " 
           << pos_y << " " 
           << heading << " "
@@ -353,6 +368,6 @@ void agent::recordStep(int t)
           << var_y << " "
           << t << " "
           << agent_type << " ";
-  outfile << std::endl; 
+  outfile << endl; 
   outfile.close();
 }

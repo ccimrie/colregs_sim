@@ -30,13 +30,13 @@ class agent
     b2BodyId getBodyID();
     double getRange();
 
-    double getVelX();
-	  double getVelY();
+    float getVelX();
+	  float getVelY();
     double getRadius();
     double getMaxVel();
 
-    void setBodyDefPose(double _x_pos, double _y_pos, double _theta);
-    void setBodyPosition(double _x_pos, double _y_pos);
+    void setBodyDefPose(float _x_pos, float _y_pos, float _theta);
+    void setBodyPosition(float _x_pos, float _y_pos);
 
     double getVelMag();
     void brownian();
@@ -67,6 +67,8 @@ class agent
     void agentNeighReset();
 
     std::string getAgentType();
+
+    std::string parseYAMLENV(std::string yaml_line);
 
     // Neighbour information
     int no_neigh=0;
