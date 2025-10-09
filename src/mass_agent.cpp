@@ -1,7 +1,5 @@
 #include <mass_agent.h>
 #include <cmath>
-#include <vision_unit.h>
-// #define M_PI 3.14159265
 
 MassAgent::MassAgent()
 {
@@ -11,9 +9,11 @@ MassAgent::MassAgent()
 void MassAgent::updateVel()
 {
  // Calculate attractor
-  double pos_x=body->GetPosition().x;
-  double pos_y=body->GetPosition().y;
-  double heading=body->GetAngle()*(M_PI/180.0);
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  double heading=b2Rot_GetAngle(rotation)*(M_PI/180.0);
   double targ_theta=atan2(targ_y-pos_y, targ_x-pos_x);
   double goal_dist=getGoalDist(pos_x, pos_y);
   double pf_x_g=goal_weight*goal_dist*cos(targ_theta);
@@ -42,21 +42,19 @@ void MassAgent::updateVel()
   else if (vel_mag>vel_max) vel_mag=vel_max;
 }
 
-
 void MassAgent::updateNeighPF(agent* neighbour)
 {
- // Vision perception unit
-  // int true_class=...
-  // int predicted_class=prediction(true_class);
-
-
  // Extract useful information from self/ego
-  double pos_x=getBody()->GetPosition().x;
-  double pos_y=getBody()->GetPosition().y;  
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;  
 
  // Extract useful information from neighbour
-  double other_pos_x=neighbour->getBody()->GetPosition().x;
-  double other_pos_y=neighbour->getBody()->GetPosition().y;
+  b2Vec2 neigh_position=b2Body_GetPosition(neighbour->getBodyID());
+  double other_pos_x=neigh_position.x;
+  double other_pos_y=neigh_position.y;
+  
+
   double other_radius=neighbour->getRadius();
   double dist_x=other_pos_x-pos_x;
   double dist_y=other_pos_y-pos_y;
@@ -64,11 +62,11 @@ void MassAgent::updateNeighPF(agent* neighbour)
   double o_theta=atan2(dist_y, dist_x);
   dist-=(radius+other_radius);
 
-  // int true_class=neighbour->getAgentType();
+ // Vision perception unit
   string true_class=neighbour->getAgentType();
   string predict_class=vision.predict(true_class, dist+radius);
 
-  double bubble_size=safety_bubble[predict_class];
+  double bubble_size=safety_bubble[true_class];
 
   double temp_neigh_weight=neigh_weight;
   if (dist<bubble_size) neigh_weight=10.0; 
@@ -90,9 +88,3 @@ double MassAgent::getGoalDist(double pos_x, double pos_y)
   double dist=sqrt(x_dist*x_dist+y_dist*y_dist);
   return dist;
 }
-
-// int predict(string true_class, double distance)
-// {
-//   string p=vision(true_class, distance);
-//   return p;
-// }

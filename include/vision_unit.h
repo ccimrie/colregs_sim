@@ -15,9 +15,6 @@ struct vessel_class_info
   double res_480_320;
   double res_320_240;
   double res_240_180;
-
-  // distance{available classes{probability}}
-  // map<string, map<string, double>> p_detection;
   map<string, map<string, double>> p_detection;
 
 };
@@ -32,9 +29,7 @@ class VisionUnit
 
   private:
     // <vessel type, vessel info>
-    map<string, vessel_class_info> vessel_info;
-
-    
+    map<string, vessel_class_info> vessel_info;  
 };
 
 #endif

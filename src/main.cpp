@@ -1,4 +1,4 @@
-#include "box2d/box2d.h"
+#include <box2d/box2d.h>
 #include "yaml-cpp/yaml.h"
 #include <stdio.h>
 #include <math.h>
@@ -7,38 +7,30 @@
 #include <string.h>
 #include <fstream>
 #include <stdlib.h>
-// #include <agent.h>
+#include <agent.h>
 #include <mass_agent.h>
 #include <normal_agent.h>
-// #include "agent_quad.h"
-// #include "quad_tree.h"
 // #include <genetic_algorithm.h>
 
 #define PI 3.14159265
-#define THRESH 0.25
 
 using namespace std;
 
-double betaVary=0.01425;
-double dense=1.0;
-
-b2Body* defineBody(b2Body* particle, double radius, double density, double friction)
+b2ShapeId defineBody(b2BodyId particle_id, double radius, double density, double friction)
 {
-  // Define another box shape for our dynamic body.
-  b2CircleShape dynamicCirc;
-  dynamicCirc.m_radius=radius;
+  // Define circle-mass for our dynamic body.
+  b2Circle dynamic_circ;
+  dynamic_circ.center=(b2Vec2){0.0f, 0.0f};
+  dynamic_circ.radius=radius;
 
-  // Define the dynamic body fixture.
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &dynamicCirc;
+  b2ShapeDef shapeDef = b2DefaultShapeDef();
+  shapeDef.density = density;
+  shapeDef.material.friction = friction;
 
-  // Set the box density to be non-zero, so it will be dynamic.
-  fixtureDef.density = density;
+  b2Vec2 position=b2Body_GetPosition(particle_id);
+  b2Rot rotation=b2Body_GetRotation(particle_id);
 
-  // Override the default friction.
-  fixtureDef.friction = friction;
-
-  particle->CreateFixture(&fixtureDef);
+  b2ShapeId particle=b2CreateCircleShape(particle_id, &shapeDef, &dynamic_circ);
   return particle;
 }
 
@@ -51,13 +43,15 @@ void setGoal(agent* ego, vector<vector<double>> goals, int selection)
 
 void checkNeigh(NormalAgent* ego, agent* neigh)
 {
-  double pos_x=ego->getBody()->GetPosition().x;
-  double pos_y=ego->getBody()->GetPosition().y;
+  b2Vec2 position=b2Body_GetPosition(ego->getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;
   double colregs_range=ego->getRange();
   double vel_mag=ego->getMaxVel();
 
-  double other_pos_x=neigh->getBody()->GetPosition().x;
-  double other_pos_y=neigh->getBody()->GetPosition().y;
+  b2Vec2 neigh_position=b2Body_GetPosition(neigh->getBodyID());
+  double other_pos_x=neigh_position.x;
+  double other_pos_y=neigh_position.y;
   double other_vel_mag=neigh->getVelMag();
 
   double dist_x=pos_x-other_pos_x;
@@ -75,13 +69,15 @@ void checkNeigh(NormalAgent* ego, agent* neigh)
 
 void checkNeighMass(MassAgent* ego, agent* neigh)
 {
-  double pos_x=ego->getBody()->GetPosition().x;
-  double pos_y=ego->getBody()->GetPosition().y;
+  b2Vec2 position=b2Body_GetPosition(ego->getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;
   double mass_range=ego->getRange();
   double vel_mag=ego->getMaxVel();
 
-  double other_pos_x=neigh->getBody()->GetPosition().x;
-  double other_pos_y=neigh->getBody()->GetPosition().y;
+  b2Vec2 neigh_position=b2Body_GetPosition(neigh->getBodyID());
+  double other_pos_x=neigh_position.x;
+  double other_pos_y=neigh_position.y;
   double other_vel_mag=neigh->getVelMag();
 
   double dist_x=pos_x-other_pos_x;
@@ -96,9 +92,8 @@ void checkNeighMass(MassAgent* ego, agent* neigh)
   }
 }
 
-
 int main(int argc, const char* argv[])
-{  
+{
    // Parameters from input args
     string yaml_file(argv[1]);
     YAML::Node config = YAML::LoadFile(yaml_file);
@@ -111,9 +106,6 @@ int main(int argc, const char* argv[])
     const string results_dir=config["results directory"].as<string>();
 
     bool lane_setup=config["lanes setup"].as<bool>();
-
-    B2_NOT_USED(argc);
-    B2_NOT_USED(argv);
 
    // RNG setup
     std::uniform_real_distribution<double> distribution_seeds(0, 10000000);
@@ -140,10 +132,13 @@ int main(int argc, const char* argv[])
 
    // Set up simulated world/environment
     // Define the gravity vector.
-    b2Vec2 gravity(0.0f, 0.0f);
+    b2Vec2 gravity={0.0f, 0.0f};
 
     // Construct a world object, which will hold and simulate the rigid bodies.
-    b2World world(gravity);
+    b2WorldDef worldDef = b2DefaultWorldDef();
+    worldDef.gravity=gravity;
+    b2WorldId worldID=b2CreateWorld(&worldDef);
+
 
    // Create COLREG agents
     std::vector<NormalAgent> colregs;
@@ -151,7 +146,6 @@ int main(int argc, const char* argv[])
     std::vector<string> colregs_keys;
 
     YAML::Node agents=config["agents"];
-
     for(YAML::const_iterator it=agents.begin(); it!=agents.end(); ++it)
     {
       std::string key=it->first.as<std::string>();         // <- key
@@ -186,12 +180,14 @@ int main(int argc, const char* argv[])
           init_theta=(1-2*drand48())*180.0;
         }
 
+        // printf("CREATING BODY: %f   %f\n", colregs.back().getBodyDef().position.x, colregs.back().getBodyDef().position.y);
         colregs.back().setBodyDefPose(init_x, init_y, init_theta);
-
-
-        b2BodyDef temp_body=colregs.back().getBodyDef();
-        colregs.back().setBody(world.CreateBody(&temp_body));
-        colregs.back().setBody(defineBody(colregs.back().getBody(), colregs.back().getRadius(), 40, 0.3));
+        // b2BodyDef temp_body=colregs.back().getBodyDef();
+        printf("DEFINING BODY\n");
+        colregs.back().setBodyID(b2CreateBody(worldID, colregs.back().getBodyDef()));
+        printf("BODY SET\n");
+        // colregs.back().setBodyID(defineBody(colregs.back().getBody(), colregs.back().getRadius(), 40, 0.3));
+        defineBody(colregs.back().getBodyID(), colregs.back().getRadius(), 40, 0.3);
       }
       colregs_pops.push_back(N);
     }
@@ -228,9 +224,10 @@ int main(int argc, const char* argv[])
 
         setGoal(&MASS.back(), goal_locations, choice(dev));
 
-        b2BodyDef temp_body=MASS.back().getBodyDef();
-        MASS.back().setBody(world.CreateBody(&temp_body));
-        MASS.back().setBody(defineBody(MASS.back().getBody(), MASS.back().getRadius(), 40, 0.3));
+        // b2BodyDef temp_body=MASS.back().getBodyDef();
+        MASS.back().setBodyID(b2CreateBody(worldID,MASS.back().getBodyDef()));
+        // MASS.back().setBody(defineBody(MASS.back().getBody(), MASS.back().getRadius(), 40, 0.3));
+        defineBody(MASS.back().getBodyID(), MASS.back().getRadius(), 40, 0.3);
       }
       mass_pops.push_back(N);
     }
@@ -239,18 +236,22 @@ int main(int argc, const char* argv[])
     // Prepare for simulation. Typically we use a time step of 1/60 of a
     // second (60Hz) and 10 iterations. This provides a high quality simulation
     // in most game scenarios.
-    float_t timeStep = 1.0f / 60.0f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
+    float timeStep = 1.0f / 60.0f;
+
+    /* Substep count: 
+      - higher->accuracy
+      - lower->performance
+    */
+    int subStepCount=4;
 
     std::vector<int> neighbours;
-    std::vector<b2Body*> agent_bodies_temp;
+    std::vector<b2BodyId*> agent_bodies_temp;
     std::vector<int> neigh_ind;
 
     int overall_counter=0;
 
    // Run simulation 
-    for (int32 t=0; t<TT; ++t)
+    for (int t=0; t<TT; ++t)
     {
       if (t%500==0) printf("%i\n", t);
       
@@ -293,12 +294,14 @@ int main(int argc, const char* argv[])
       for (vector<MassAgent>::iterator it_mass=MASS.begin(); it_mass!=MASS.end(); ++it_mass)
       {
         it_mass->updateVel();
-        double mass_ang_velocity=(it_mass->getThetaAcc()*180.0)/PI;
-        b2Vec2 mass_lin_velocity;
-        mass_lin_velocity.Set(it_mass->getVelX(), it_mass->getVelY());
+        double mass_ang_velocity=it_mass->getThetaAcc();
+        b2Vec2 mass_lin_velocity={it_mass->getVelX(), it_mass->getVelY()};
+        // mass_lin_velocity.Set(it_mass->getVelX(), it_mass->getVelY());
       
-        it_mass->getBody()->SetLinearVelocity(mass_lin_velocity);
-        it_mass->getBody()->SetAngularVelocity(mass_ang_velocity);
+        // it_mass->getBody()->SetLinearVelocity(mass_lin_velocity);
+        b2Body_SetLinearVelocity(it_mass->getBodyID(), mass_lin_velocity);
+        // it_mass->getBody()->SetAngularVelocity(mass_ang_velocity);
+        b2Body_SetAngularVelocity(it_mass->getBodyID(), mass_ang_velocity);
       }
 
      // Update with new velocity commands
@@ -310,18 +313,24 @@ int main(int argc, const char* argv[])
         it_ego->updateVelMag();
         it_ego->updateTheta();
 
-        double ang_velocity=(it_ego->getThetaAcc()*180.0)/PI;
-        b2Vec2 lin_velocity;
-        lin_velocity.Set(it_ego->getVelX(), it_ego->getVelY());
+        double ang_velocity=it_ego->getThetaAcc();
+        b2Vec2 lin_velocity={it_ego->getVelX(), it_ego->getVelY()};
+        // lin_velocity={0.0f,0.0f};
+        // lin_velocity.Set(it_ego->getVelX(), it_ego->getVelY());
         
-        it_ego->getBody()->SetLinearVelocity(lin_velocity);
-        it_ego->getBody()->SetAngularVelocity(ang_velocity);
+        // it_ego->getBody()->SetLinearVelocity(lin_velocity);
+        b2Body_SetLinearVelocity(it_ego->getBodyID(), lin_velocity);
+        b2Body_SetAngularVelocity(it_ego->getBodyID(), ang_velocity);
+        // b2Body_SetAngularVelocity(it_ego->getBodyID(), 1.0f);
+        // it_ego->getBody()->SetAngularVelocity(ang_velocity);
       }
 
       // Instruct the world to perform a single step of simulation.
       // It is generally best to keep the time step and iterations fixed.
-      world.Step(timeStep, velocityIterations, positionIterations);
-
+      // printf("Angle:\n");
+      // printf("\t- Before: %f\n", b2Rot_GetAngle(b2Body_GetRotation(colregs.back().getBodyID())));
+      b2World_Step(worldID, timeStep, subStepCount);
+      // printf("\t- After: %f\n\n", b2Rot_GetAngle(b2Body_GetRotation(colregs.back().getBodyID())));
       // Now print the position and angle of the body.
       it_ego=colregs.begin();
       for(it_ego; it_ego!=colregs.end(); ++it_ego)
@@ -334,6 +343,5 @@ int main(int argc, const char* argv[])
    
     // When the world destructor is called, all bodies and joints are freed. This can
     // create orphaned pointers, so be careful about your world management.
-
     return 0;
 }

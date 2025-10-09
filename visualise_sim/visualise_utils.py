@@ -39,7 +39,7 @@ def updateAgent(agent_ax, agent, t):
     heading_x=agent[t,0]
     heading_y=agent[t,1]-(0.1*r_radius)*0.5
     agent_ax[4].set_xy([heading_x, heading_y])
-    agent_ax[4].set_angle(agent[t,2])
+    agent_ax[4].set_angle(agent[t,2]*180.0/np.pi)
     return agent_ax[0], agent_ax[2], agent_ax[4]
 
 def plotOnAx(values, t, ax_x, colour=None):
@@ -57,9 +57,9 @@ def plotOnAx(values, t, ax_x, colour=None):
     sns_colour=0.7*np.ones(3)
     rbt_sns=plt.Circle(values[t,0:2], radius=rng_radius_small, fc=sns_colour, alpha=0.2, zorder=3)
     rbt_sns=ax_x.add_patch(rbt_sns)
-    rbt_angle=(values[t,2]*np.pi/180.0)
-    rbt_lnx=(1.2*r_radius)*np.cos(values[t,2]*np.pi/180.0)
-    rbt_lny=(1.2*r_radius)*np.sin(values[t,2]*np.pi/180.0)
+    rbt_angle=(values[t,2])
+    rbt_lnx=(1.2*r_radius)*np.cos(values[t,2])
+    rbt_lny=(1.2*r_radius)*np.sin(values[t,2])
 
     ## Local line (heading direction)
     # rbt_ln,=ax_x.plot([values[t,0],values[t,0]+rbt_lnx], [values[t,1], values[t,1]+rbt_lny], linewidth=r_radius*3, c=[0,0,0], zorder=20)
@@ -264,7 +264,7 @@ def setupAxes(zoom=False, axis_lines=False, zoom_mag=0.0, bounds=None):
         x_max=bounds[0,1]
         y_min=bounds[1,0]
         y_max=bounds[1,1]
-    print(x_min, x_max)
+    # print(x_min, x_max)
     TT=np.max(np.array(max_vals)[:,4])
 
     ## Plot agents's goal locations

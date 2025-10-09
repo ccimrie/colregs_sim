@@ -22,16 +22,20 @@ NormalAgent::NormalAgent()
 void NormalAgent::updateVel(agent* neighbour)
 {
  // Extract useful information from self/ego
-  double pos_x=getBody()->GetPosition().x;
-  double pos_y=getBody()->GetPosition().y;  
-  double heading=body->GetAngle()*(PI/180.0);
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y; 
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  double heading=b2Rot_GetAngle(rotation);
 
-  double targ_theta=atan2(targ_y-body->GetPosition().y, targ_x-body->GetPosition().x);
+  double targ_theta=atan2(targ_y-pos_y, targ_x-pos_x);
 
  // Extract useful information from neighbour
-  double neigh_pos_x=neighbour->getBody()->GetPosition().x;
-  double neigh_pos_y=neighbour->getBody()->GetPosition().y;
-  double neigh_heading=neighbour->getBody()->GetAngle()*(PI/180);
+  b2Vec2 neigh_position=b2Body_GetPosition(neighbour->getBodyID());
+  double neigh_pos_x=neigh_position.x;
+  double neigh_pos_y=neigh_position.y; 
+  b2Rot neigh_rotation=b2Body_GetRotation(neighbour->getBodyID());
+  double neigh_heading=b2Rot_GetAngle(rotation);
   double neigh_theta=atan2(neigh_pos_y, neigh_pos_x);
   
   double neigh_vel_mag=neighbour->getVelMag();
@@ -131,8 +135,9 @@ void NormalAgent::updateVel(agent* neighbour)
 
 int NormalAgent::checkFuture(int lookahead_time, double neigh_pos_x, double neigh_pos_y, double neigh_vel_mag, double neigh_theta, double neigh_radius)
 {
-  double pos_x=getBody()->GetPosition().x;
-  double pos_y=getBody()->GetPosition().y;
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;
   double vel_x=getVelX();
   double vel_y=getVelY();
 
@@ -168,7 +173,8 @@ bool NormalAgent::oncomingUpdate(double other_targ_relative_pos_x, double other_
   double frame_theta=egoAngle();
   double oncoming_goal_theta=newAngleWorldFrame(other_targ_relative_pos_x, other_targ_relative_pos_y, other_radius, frame_theta);
 
-  double heading=body->GetAngle()*(PI/180.0);    
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  double heading=b2Rot_GetAngle(rotation)*(PI/180.0);
   temp_theta_acc=(oncoming_goal_theta-heading);
 
   if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
@@ -183,7 +189,8 @@ bool NormalAgent::overTakingUpdate(double other_pos_x, double other_pos_y, doubl
       double frame_theta=egoAngle();
       double overtaking_goal_theta=newAngleWorldFrame(other_pos_x, other_pos_y, other_radius, frame_theta);
 
-      double heading=body->GetAngle()*(PI/180.0);    
+      b2Rot rotation=b2Body_GetRotation(getBodyID());
+      double heading=b2Rot_GetAngle(rotation)*(PI/180.0);
       double temp_theta_acc=(overtaking_goal_theta-heading);
 
       // if (other_pos_x<radius+other_radius && other_pos_y<0) temp_theta_acc*=-1;    
@@ -220,7 +227,8 @@ bool NormalAgent::crossingUpdate(double other_pos_x, double other_pos_y, double 
   double frame_theta=egoAngle();
   double crossing_goal_theta=newAngleWorldFrame(other_pos_x, other_pos_y, other_radius, frame_theta);
   
-  double heading=body->GetAngle()*(PI/180.0);    
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  double heading=b2Rot_GetAngle(rotation)*(PI/180.0);
   double temp_theta_acc=(crossing_goal_theta-heading);
   
   if (abs(temp_theta_acc)>abs(new_theta_acc)) new_theta_acc=temp_theta_acc;
@@ -230,8 +238,9 @@ bool NormalAgent::crossingUpdate(double other_pos_x, double other_pos_y, double 
 
 double NormalAgent::newAngleWorldFrame(double other_pos_x, double other_pos_y, double other_radius, double frame_theta)
 {
-  double pos_x=getBody()->GetPosition().x;
-  double pos_y=getBody()->GetPosition().y;
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y; 
 
  // Get new target point
   double new_frame_goal_x=other_pos_x;

@@ -1,4 +1,4 @@
 rm results/*
-cd ../build/bin
-./mass_colregs ../../colregs_sim/yaml_files/setup/lane_setups.yaml 
-cd ../../colregs_sim
+cd build
+./test ../yaml_files/setup/setup.yaml 
+cd ../

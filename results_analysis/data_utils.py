@@ -17,6 +17,10 @@ current_agent_ind=0
 vessel_types=[]
 agent_types={}
 
+def calcTranfserEntr(data):
+  return
+
+
 def nearMissMatrix(data, tolerance=0.001, data_override=False):
   if not data_override and os.path.exists(f"{out_dir}/{near_miss_matrix_data_filename}"):
     results=np.load(f"{out_dir}/{near_miss_matrix_data_filename}")['near_miss_matrix']

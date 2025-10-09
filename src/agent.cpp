@@ -32,8 +32,6 @@ agent::agent(std::string _yaml_file, std::string results_file, double _seed)
 
 void agent::initialiseAgent()
 {
-  // LiquidFun particle parameters
-  body_def.type=b2_dynamicBody;
 
   // Read from yaml file
   YAML::Node config = YAML::LoadFile(yaml_file);
@@ -55,8 +53,14 @@ void agent::initialiseAgent()
   double pos_x=distribution_x(gen);
   double pos_y=distribution_y(gen);
   double _angle=distribution_theta(gen);
-  body_def.position.Set(pos_x, pos_y);
-  body_def.angle=_angle;
+
+  // Box2D particle parameters
+  body_def=b2DefaultBodyDef();
+  body_def.type=b2_dynamicBody;
+  body_def.position=(b2Vec2){pos_x, pos_y};
+  // body_def.angle=_angle;
+  body_def.rotation=b2MakeRot(_angle);
+
 
  // Initialise agent's size, vel, and range
   double size_min=config["size"]["min"].as<double>();
@@ -94,53 +98,61 @@ void agent::initialiseAgent()
 
 double agent::targAngle()
 {
-  return atan2(targ_y-getBody()->GetPosition().y, targ_x-getBody()->GetPosition().x);
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  return atan2(targ_y-position.y, targ_x-position.x);
 }
 
 double agent::egoAngle()
 {
-  return (getBody()->GetAngle()*(PI/180.0));
+  b2Rot rot=b2Body_GetRotation(getBodyID());
+  return b2Rot_GetAngle(rot);
 }
 
 
-b2BodyDef agent::getBodyDef()
+b2BodyDef* agent::getBodyDef()
 {
-  return body_def;
+  return &body_def;
 }
 
-void agent::setBody(b2Body* _body)
+// void agent::setBody(b2Body* _body)
+void agent::setBodyID(b2BodyId _bodyID)
 {
-  body=_body;
+  bodyID=_bodyID;
 }
 
 void agent::setBodyDefPose(double _x_pos, double _y_pos, double _theta)
 { 
-  body_def.position.Set(_x_pos, _y_pos);
-  body_def.angle=_theta;
+  body_def.position=(b2Vec2){_x_pos, _y_pos};
+  body_def.rotation=b2MakeRot(_theta);
 }
 
 void agent::setBodyPosition(double _x_pos, double _y_pos)
 {
-  body->SetTransform(b2Vec2(_x_pos,_y_pos),body->GetAngle());
+  b2Vec2 position=(b2Vec2){_x_pos, _y_pos};//b2Body_GetPosition(getBodyID());
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  b2Body_SetTransform(getBodyID(),position,rotation);
 }
 
-b2Body* agent::getBody()
+// b2Body* agent::getBody()
+b2BodyId agent::getBodyID()
 {
-  return body;
+  return bodyID;
 }
 
 double agent::getVelX()
 {
   // return velX;
-  theta=body->GetAngle();
-  return cos(PI*theta/180.0)*vel_mag;
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  theta=b2Rot_GetAngle(rotation);
+  return cos(theta)*vel_mag;
 }
 
 double agent::getVelY()
 {
   // return velY;
-  theta=body->GetAngle();
-  return sin(PI*theta/180.0)*vel_mag;
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  theta=b2Rot_GetAngle(rotation);
+  return sin(theta)*vel_mag;
 }
 
 double agent::getMaxVel()
@@ -188,9 +200,11 @@ double agent::getRelativeGoal(double pos, double targ_pos, double var_pos)
 
 double agent::goalTheta()//double x_pos, double y_pos, double x_targ, double y_targ)
 {
-  double pos_x=body->GetPosition().x;
-  double pos_y=body->GetPosition().y;
-  double heading=body->GetAngle()*(PI/180.0);
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  double heading=b2Rot_GetAngle(rotation);
 
   double relative_targ_x=getRelativeGoal(pos_x, targ_x, var_x);
   double relative_targ_y=getRelativeGoal(pos_y, targ_y, var_y);
@@ -221,8 +235,9 @@ void agent::setTarget(double _targ_x, double _var_x, double _targ_y, double _var
 
 bool agent::checkGoal()
 {
-  double pos_x=getBody()->GetPosition().x;
-  double pos_y=getBody()->GetPosition().y;
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;
   if (pos_x<targ_x+var_x && pos_x>targ_x-var_x && pos_y<targ_y+var_y && pos_y>targ_y-var_y) return true;
   else return false;
 } 
@@ -318,10 +333,16 @@ void agent::recordStep(int t)
   {
     printf("\tProblem:\n\t\t- %f\n\t\t- %f\n\n", sum_neigh_dist, no_neigh);
   }
+  b2Vec2 position=b2Body_GetPosition(getBodyID());
+  double pos_x=position.x;
+  double pos_y=position.y;
+  b2Rot rotation=b2Body_GetRotation(getBodyID());
+  double heading=b2Rot_GetAngle(rotation);
+
   outfile.open(filename, std::ios_base::app);
-  outfile << body->GetPosition().x  << " " 
-          << body->GetPosition().y << " " 
-          << body->GetAngle() << " "
+  outfile << pos_x  << " " 
+          << pos_y << " " 
+          << heading << " "
           << radius << " "
           << range << " "
           << no_neigh << " "
