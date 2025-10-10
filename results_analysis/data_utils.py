@@ -149,6 +149,7 @@ def avgNeighDist(data, data_override=False):
     pickle.dump(results, handle, protocol=pickle.HIGHEST_PROTOCOL)
   return results
 
+
 def storeData(data_override=False):
   if not data_override and os.path.exists(f"{out_dir}/{agent_types_pickle_name}"):
     if os.path.exists(f"{out_dir}/{data_filename}"):
