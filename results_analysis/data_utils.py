@@ -17,6 +17,10 @@ current_agent_ind=0
 vessel_types=[]
 agent_types={}
 
+def calcTranfserEntr(data):
+  return
+
+
 def nearMissMatrix(data, tolerance=0.001, data_override=False):
   if not data_override and os.path.exists(f"{out_dir}/{near_miss_matrix_data_filename}"):
     results=np.load(f"{out_dir}/{near_miss_matrix_data_filename}")['near_miss_matrix']
@@ -144,6 +148,7 @@ def avgNeighDist(data, data_override=False):
   with open(f"{out_dir}/{neigh_dist_data_filename}", 'wb') as handle:
     pickle.dump(results, handle, protocol=pickle.HIGHEST_PROTOCOL)
   return results
+
 
 def storeData(data_override=False):
   if not data_override and os.path.exists(f"{out_dir}/{agent_types_pickle_name}"):

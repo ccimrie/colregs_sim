@@ -7,10 +7,6 @@ from data_utils import *
 import time
 import sys
 
-# vessel_types=['COLREGS', 'non-COLREGS', 'MASS']
-
-
-
 data_override=False
 
 if len(sys.argv)>1 and sys.argv[1]:

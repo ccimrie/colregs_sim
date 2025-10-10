@@ -1,7 +1,7 @@
 #ifndef AGENT_H
 #define AGENT_H
 
-#include "box2d/box2d.h"
+#include <box2d/box2d.h>
 #include "yaml-cpp/yaml.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,6 @@
 #include <fstream>
 #include <random>
 #include <chrono>
-#include <armadillo>
 #include <tuple>
 
 
@@ -24,18 +23,20 @@ class agent
     agent(std::string yaml_file, std::string results_file, double seed);
     void initialiseAgent();
 
-    b2BodyDef getBodyDef();
-    void setBody(b2Body* _body);
-    b2Body* getBody();
+    b2BodyDef* getBodyDef();
+    // void setBody(b2Body* _body);
+    void setBodyID(b2BodyId _bodyID);
+    // b2Body* getBody();
+    b2BodyId getBodyID();
     double getRange();
 
-    double getVelX();
-	  double getVelY();
+    float getVelX();
+	  float getVelY();
     double getRadius();
     double getMaxVel();
 
-    void setBodyDefPose(double _x_pos, double _y_pos, double _theta);
-    void setBodyPosition(double _x_pos, double _y_pos);
+    void setBodyDefPose(float _x_pos, float _y_pos, float _theta);
+    void setBodyPosition(float _x_pos, float _y_pos);
 
     double getVelMag();
     void brownian();
@@ -67,6 +68,8 @@ class agent
 
     std::string getAgentType();
 
+    std::string parseYAMLENV(std::string yaml_line);
+
     // Neighbour information
     int no_neigh=0;
     double sum_neigh_dist=0.0;
@@ -83,7 +86,8 @@ class agent
 
   	// Agent definitions
     b2BodyDef body_def;
-    b2Body* body;
+    // b2Body* body;
+    b2BodyId bodyID;
     double radius;
     double sense;
     // double thresh;

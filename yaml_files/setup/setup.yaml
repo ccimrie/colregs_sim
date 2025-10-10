@@ -1,9 +1,0 @@
-TT: 12500
-world size x: 50
-world size y: 50
-N: 25
-results directory: ../colregs_sim/results/
-max size: 0.6
-min size: 0.2
-vel-size ratio: 2.0
-range-size ratio: 9.0
