@@ -356,7 +356,7 @@ void agent::recordStep(int t)
 
   outfile.open(filename, ios_base::app);
   outfile << pos_x  << " " 
-          << pos_y << " " 
+          << pos_y << " "
           << heading << " "
           << radius << " "
           << range << " "
@@ -367,6 +367,9 @@ void agent::recordStep(int t)
           << targ_y << " "
           << var_y << " "
           << t << " "
+          << getVelX() << " "
+          << getVelY() << " "
+          << getThetaAcc() << " " 
           << agent_type << " ";
   outfile << endl; 
   outfile.close();
