@@ -11,6 +11,7 @@
 #include <agent.h>
 #include <mass_agent.h>
 #include <normal_agent.h>
+#include <time.h>
 // #include <genetic_algorithm.h>
 
 #define PI 3.14159265
@@ -30,6 +31,7 @@ string parseYAMLENV(string yaml_line)
   std::regex_replace(std::back_inserter(parsed_line), yaml_line.begin(), yaml_line.end(), env_regex, env_val);
   return parsed_line;
 }
+
 
 b2ShapeId defineBody(b2BodyId particle_id, double radius, double density, double friction)
 {
@@ -75,7 +77,8 @@ void checkNeigh(NormalAgent* ego, agent* neigh)
   double closest_dist_point=dist-neigh->getRadius();
   if (closest_dist_point<colregs_range)
   {
-    ego->updateVel(neigh);
+    // ego->updateVel(neigh);
+    ego->recordNeighbour(neigh);
     ++ego->no_neigh;
     ego->sum_neigh_dist+=closest_dist_point;
   }
@@ -107,6 +110,7 @@ void checkNeighMass(MassAgent* ego, agent* neigh)
   }
 }
 
+
 int main(int argc, const char* argv[])
 {
  // Parameters from input args
@@ -137,6 +141,9 @@ int main(int argc, const char* argv[])
   vector<vector<double>> goal_locations;
 
   YAML::Node goals=goal_config["goals"];
+
+  double x_min, x_max;
+
   for(YAML::const_iterator it=goals.begin(); it!=goals.end(); ++it)
   {
     std::string key=it->first.as<std::string>();
@@ -159,13 +166,16 @@ int main(int argc, const char* argv[])
   worldDef.gravity=gravity;
   b2WorldId worldID=b2CreateWorld(&worldDef);
 
+ // Random number generators for initial position
+  std::uniform_real_distribution<double> distribution_init_X(config["X dimensions"]["min"].as<double>(),config["X dimensions"]["max"].as<double>());
+  std::uniform_real_distribution<double> distribution_init_Y(config["Y dimensions"]["min"].as<double>(),config["Y dimensions"]["max"].as<double>());
+
  // Create COLREG agents
   std::vector<NormalAgent> colregs;
   std::vector<int> colregs_pops;
   std::vector<string> colregs_keys;
 
   YAML::Node agents=config["agents"];
-
   printf("Instatiating COLREG agents...\n");
   for(YAML::const_iterator it=agents.begin(); it!=agents.end(); ++it)
   {
@@ -181,7 +191,6 @@ int main(int argc, const char* argv[])
       double seed=distribution_seeds(gen);
       colregs.push_back(NormalAgent(agent_yaml_file, results_file, seed));
 
-
       setGoal(&colregs.back(), goal_locations, choice(dev));
 
       float init_x, init_y, init_theta;
@@ -195,16 +204,19 @@ int main(int argc, const char* argv[])
       }
       else
       {
-        int start_loc=choice(dev);
-        init_x=goal_locations[start_loc][0]+(1-2*drand48())*goal_locations[start_loc][2];
-        init_y=goal_locations[start_loc][1]+(1-2*drand48())*goal_locations[start_loc][2];
-        init_theta=(1-2*drand48())*180.0;
+        // int start_loc=choice(dev);
+        init_x=distribution_init_X(gen);//goal_locations[start_loc][0]+(1-2*drand48())*goal_locations[start_loc][2];
+        init_y=distribution_init_X(gen);//goal_locations[start_loc][1]+(1-2*drand48())*goal_locations[start_loc][2];
+        // init_theta=(1-2*drand48())*180.0;
+        init_theta=atan2(colregs.back().targ_y-init_y, colregs.back().targ_x-init_x);
       }
 
       colregs.back().setBodyDefPose(init_x, init_y, init_theta);
       colregs.back().setBodyID(b2CreateBody(worldID, colregs.back().getBodyDef()));
       defineBody(colregs.back().getBodyID(), colregs.back().getRadius(), 40, 0.3);
+      // std::cout << "Checking with each agent..." << std::endl;
     }
+    // std::cout << "Checking 0..." << std::endl;
     colregs_pops.push_back(N);
   }
   printf("COLREG agents instantiated\n");
@@ -265,11 +277,12 @@ int main(int argc, const char* argv[])
   std::vector<int> neigh_ind;
 
   int overall_counter=0;
-
+  clock_t clkStart;
+  clock_t clkFinish;
  // Run simulation 
   for (int t=0; t<TT; ++t)
   {
-    if (t%500==0) printf("%i\n", t);
+    if (t%50==0) printf("%i\n", t);
     
     // For each mass 
     // 1. Check distance
@@ -278,6 +291,7 @@ int main(int argc, const char* argv[])
 
    // Calculate new velocity commands
     vector<NormalAgent>::iterator it_ego=colregs.begin();
+    // std::cout<<"Going through agents..."<<std::endl;
     for(it_ego; it_ego!=colregs.end(); ++it_ego)
     {
       if(it_ego->checkGoal()) setGoal(&*it_ego, goal_locations, choice(dev));
@@ -287,7 +301,13 @@ int main(int argc, const char* argv[])
       {
         checkNeigh(&*it_ego, &*it_mass);
       }
+      // clkStart = clock();
+      it_ego->updateVel();
+      // clkFinish = clock();
+      // printf("\t--- Time to complete: %f\n",(double(clkFinish - clkStart))/CLOCKS_PER_SEC);
+      // std::cout << "\t--- " << (clkFinish - clkStart)/CLOCKS_PER_SEC<<"\n\n";
     }
+    // std::cout<<"COMPLETED!"<<std::endl;
 
     for (vector<MassAgent>::iterator it_mass=MASS.begin(); it_mass!=MASS.end(); ++it_mass)
     {
@@ -321,8 +341,8 @@ int main(int argc, const char* argv[])
     {
       // Update the robot's heading
       // Update robot's velocity
-      it_ego->updateVelMag();
-      it_ego->updateTheta();
+      // it_ego->updateVelMag();
+      // it_ego->updateTheta();
 
       double ang_velocity=it_ego->getThetaAcc();
       b2Vec2 lin_velocity={it_ego->getVelX(), it_ego->getVelY()};
@@ -337,7 +357,7 @@ int main(int argc, const char* argv[])
     // Now print the position and angle of the body.
     it_ego=colregs.begin();
     for(it_ego; it_ego!=colregs.end(); ++it_ego)
-    {
+    { 
       it_ego->recordStep(t);
       it_ego->agentNeighReset();
     }
@@ -346,5 +366,6 @@ int main(int argc, const char* argv[])
  
   // When the world destructor is called, all bodies and joints are freed. This can
   // create orphaned pointers, so be careful about your world management.
+  printf("Finished simulation\n");
   return 0;
 }

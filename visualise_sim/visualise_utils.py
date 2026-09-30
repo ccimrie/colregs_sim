@@ -42,6 +42,7 @@ def updateAgent(agent_ax, agent, t):
     agent_ax[4].set_angle(agent[t,2]*180.0/np.pi)
     return agent_ax[0], agent_ax[2], agent_ax[4]
 
+
 def plotOnAx(values, t, ax_x, colour=None):
     start_time=int(values[0,11])
     t=t-start_time
@@ -74,10 +75,12 @@ def plotOnAx(values, t, ax_x, colour=None):
     agent=[rbt, r_radius, rbt_sns, rbt_angle, rbt_heading]
     return agent
 
+
 def getAllAgentInfo():
-    results_dir='../results'
+    results_dir='../build/results'
     files=os.listdir(results_dir)
-    files=[file for file in files if file[-4:]=='.txt']
+    # print(file, "nmpc_seq" in file)
+    files=[file for file in files if file[-4:]=='.txt' and not ("nmpc_seq" in file)]
     goals={}
     goal_ind=0
 
@@ -89,6 +92,7 @@ def getAllAgentInfo():
 
     for file in files:
         results=np.loadtxt(f'{results_dir}/{file}')
+        # print(results)
         goal=results[0,7:11]
         found=False
         for key in goals:
@@ -103,6 +107,7 @@ def getAllAgentInfo():
         if results[-1,11]>TT:
             TT=results[-1,11]
     return agent_info, max_vals, goals, TT
+
 
 def setUpSimAxesOnly(zoom_mag, goals, max_vals, colour=None):
     fig=plt.figure()
@@ -163,10 +168,11 @@ def setUpSimAxesOnly(zoom_mag, goals, max_vals, colour=None):
 
     return fig, ax, ax_zoom
 
+
 def setupAxes(zoom=False, axis_lines=False, zoom_mag=0.0, bounds=None):
-    results_dir='../results'
+    results_dir='../build/results'
     files=os.listdir(results_dir)
-    files=[file for file in files if file[-4:]=='.txt']
+    files=[file for file in files if file[-4:]=='.txt' and not "nmpc_seq" in file]
     fig=plt.figure()
     axs=[]
     # print("Value of zoom: ", zoom)
@@ -203,7 +209,9 @@ def setupAxes(zoom=False, axis_lines=False, zoom_mag=0.0, bounds=None):
 
     def convertRow(val_in):
         global current_colour_ind
-        val=val_in.decode()
+        # print(f"\n{val_in}\n")
+        # val=val_in.decode()
+        val=val_in
         try:
             float(val)
             return float(val)

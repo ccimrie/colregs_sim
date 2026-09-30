@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import os
 import pickle
 
-results_dir='../results'
-out_dir="data"
+results_dir='../build/results'
+out_dir="../build/data"
 agent_types_pickle_name="agent_types.pickle"
 data_filename="fleet_info.npz"
 
@@ -32,12 +32,17 @@ def nearMissMatrix(data, tolerance=0.001, data_override=False):
     pos=ego[0:2]
     diff=others-pos
     dist=np.sqrt(diff[:,0]**2+diff[:,1]**2)-vals[0,3]-vals[1:,3]
-    
+    max_t=-1
     for ind in np.arange(len(dist)):
       if dist[ind]<tolerance:
         mat[v_type, int(vals[ind,-1])]+=1
         mat[int(vals[ind,-1]), v_type]+=1
-    ## Remove if in constant collision?
+        if ind>max_t:
+          max_t=ind
+        ## Remove if in constant collision?
+    if max_t>-1:
+      print(f"\nMax time step of near miss:  {max_t}")
+    # sys.exit()
     return mat
 
   no_agent_types=len(agent_types)
@@ -64,24 +69,34 @@ def calculateNearMiss(data, tolerance=0.001, data_override=False):
     others=vals[1:,0:2]
     pos=ego[0:2]
     diff=others-pos
+    dist0=np.sqrt(diff[:,0]**2+diff[:,1]**2)
+    dist1=dist0-vals[0,3]
+    dist2=dist1-vals[1:,3]
+    check=np.sum(dist2<tolerance)>0
+    if check:
+      print(f"Vals:\n\t-- {vals[0,3]}\n\t-- {vals[1:,3]}\n\t-- {dist0}\n\t-- {dist1}\n\t-- {dist2}")
+      sys.exit()
     dist=np.sqrt(diff[:,0]**2+diff[:,1]**2)-vals[0,3]-vals[1:,3]
     ## Remove if in constant collision?
+
     return np.sum(dist<tolerance)
   TT=len(data)
   agent_num=data.shape[1]
   near_collisions=[0]*TT
   for t in np.arange(TT):
-    collisions=[checkCollision(data[t][v:]) for v in np.arange(agent_num)]
+    collisions=[checkCollision(data[t,v:]) for v in np.arange(agent_num)]
+    print(f"\n{t}:  {np.sum(collisions)}\n")
     near_collisions[t]=np.sum(collisions)
   np.savez(f"{out_dir}/{near_miss_data_filename}", near_miss=near_collisions)
-  
+  sys.exit()
   mass_collisions=0
   test_t=0
   for t in np.arange(TT):
     v_ind=-1
     for v in np.arange(agent_num):
+      # print(agent_types[data[t][v][-1]])
       if "MASS" in agent_types[data[t][v][-1]]:
-        print(agent_types[data[t][v][-1]])
+        # print(agent_types[data[t][v][-1]])
         v_ind=v
         test_t+=1
         break
@@ -94,7 +109,7 @@ def calculateNearMiss(data, tolerance=0.001, data_override=False):
       dist=np.sqrt(diff[:,0]**2+diff[:,1]**2)-data[t][v_ind][3]-others[:,3]
       ## Remove if in constant collision?
       mass_collisions+=np.sum(dist<tolerance)
-  print(f"Collision ratio: {test_t} {mass_collisions}/{np.sum(near_collisions)}")
+  # print(f"Collision ratio: {test_t} {mass_collisions}/{np.sum(near_collisions)}")
   return near_collisions
 
 
@@ -118,7 +133,8 @@ def avgNeighCount(data, data_override=False):
     results[agent_type]=[-1]*TT
   for t in np.arange(TT):
     for agent_type in agent_types:
-      vals=[v[5] for v in data[t,:,:] if v[12]==agent_type]
+      # print(f"\n{data[t,:,:][0]}")
+      vals=[v[5] for v in data[t,:,:] if v[-1]==agent_type]
       results[agent_type][t]=np.mean(vals)
   # np.savez(f"{out_dir}/{neigh_count_data_filename}", avg_neigh_count=results)
   with open(f"{out_dir}/{neigh_count_data_filename}", 'wb') as handle:
@@ -142,7 +158,7 @@ def avgNeighDist(data, data_override=False):
     results[agent_type]=[-1]*TT
   for t in np.arange(TT):
     for agent_type in agent_types:
-      vals=[v[6] for v in data[t,:,:] if (v[12]==agent_type)]# and v[5]>0)]
+      vals=[v[6] for v in data[t,:,:] if (v[-1]==agent_type)]# and v[5]>0)]
       results[agent_type][t]=np.mean(vals)
   # np.savez(f"{out_dir}/{neigh_dist_data_filename}", avg_neigh_dist=results)
   with open(f"{out_dir}/{neigh_dist_data_filename}", 'wb') as handle:
@@ -158,7 +174,7 @@ def storeData(data_override=False):
 
   print("\tExtracting raw data...")
   TT=1
-  features=13
+  features=16
   data=np.ones((TT,0,features), dtype=float)*-1
   files=os.listdir(results_dir)
   files=[file for file in files if file[-4:]=='.txt']
@@ -167,7 +183,8 @@ def storeData(data_override=False):
 
   def convertRow(val_in):
     global current_agent_ind
-    val=val_in.decode()
+    # val=val_in.decode()
+    val=val_in
     try:
       float(val)
       return float(val)

@@ -8,7 +8,8 @@ else
 fi
 
 cd ${SIM_DIR_PATH}
-rm results/*
+rm -rf build/results
+mkdir build/results
 cd build
 ./test ${SIM_DIR_PATH}/yaml_files/setup/${YAML_FILE}
 cd ${SIM_DIR_PATH}

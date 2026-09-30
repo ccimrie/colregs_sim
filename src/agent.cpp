@@ -9,7 +9,7 @@
 #include <fstream>
 #include <random>
 #include <chrono>
-#include <armadillo>
+// #include <armadillo>
 #include <tuple>
 #include "agent.h"
 
@@ -74,6 +74,7 @@ void agent::initialiseAgent()
  // Robot sensor parameters
   range=radius*config["range-size ratio"].as<double>();
   vel_max=radius*config["vel-size ratio"]["linear"].as<double>();
+  vel_mag=radius*config["vel-size ratio"]["linear"].as<double>();
   vel_theta_max=config["vel-size ratio"]["angular"].as<double>()/radius;
   agent_type=config["agent type"].as<string>();
 
@@ -177,6 +178,10 @@ double agent::getMaxVel()
 
 void agent::updateTheta()
 {
+
+  theta_acc=new_theta_acc;
+  return;
+
   double gamma=0.9;
   if (new_theta_acc>0.0 || new_theta_acc<0.0)
   { 
@@ -264,7 +269,10 @@ void agent::setTheta(double _theta)
 
 void agent::setThetaAcc(double _theta_acc)
 {
-  theta_acc=_theta_acc;
+  if (_theta_acc<vel_theta_max && _theta_acc>-vel_theta_max) theta_acc=_theta_acc;
+  else if (_theta_acc<-vel_theta_max) theta_acc=-vel_theta_max;
+  else if (_theta_acc>vel_theta_max) theta_acc=vel_theta_max;
+  // theta_acc=_theta_acc;
 }
 
 double agent::getThetaAcc()
@@ -294,7 +302,9 @@ void agent::updateVelMag()
 
 void agent::setVelMag(double _vel_mag)
 {
-  vel_mag=_vel_mag;
+  if (_vel_mag<=vel_max && _vel_mag>0.0) vel_mag=_vel_mag;
+  else if (_vel_mag<0.0) vel_mag=0.0;
+  else if (_vel_mag>vel_max) vel_mag=vel_max;
   // updateVel();
 }
 
@@ -327,21 +337,25 @@ string agent::getAgentType()
 
 void agent::recordStep(int t)
 {
-  // TODO: save output as csv file; easier to add without needing to modify python visualising/data analysis
-  // Recording:
-  //   - 0: x
-  //   - 1: y
-  //   - 2: \theta
-  //   - 3: radius (size)
-  //   - 4: sensor/communication range
-  //   - 5: number of neighbours
-  //   - 6: average distance to neighbours
-  //   - 7: x-target
-  //   - 8: x-target tolerance
-  //   - 9: y-target
-  //   - 10: y-target tolerance
-  //   - 11: current world timestep
-  //   - 12: agent type (for plotting and analysis)
+  /* TODO: save output as csv file; easier to add without needing to modify python visualising/data analysis
+   Recording:
+     - 0: x
+     - 1: y
+     - 2: \theta
+     - 3: radius (size)
+     - 4: sensor/communication range
+     - 5: number of neighbours
+     - 6: average distance to neighbours
+     - 7: x-target
+     - 8: x-target tolerance
+     - 9: y-target
+     - 10: y-target tolerance
+     - 11: current world timestep
+     - 12: X velocity
+     - 13: Y velocity
+     - 14: Angular velocity
+     - 15: agent type (for plotting and analysis)
+  */
   double avg_neigh_dist=range;
   if (no_neigh>0) avg_neigh_dist=sum_neigh_dist/no_neigh;
   // if (avg_neigh_dist!=avg_neigh_dist)

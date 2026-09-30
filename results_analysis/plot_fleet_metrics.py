@@ -9,8 +9,8 @@ import sys
 
 data_override=False
 
-if len(sys.argv)>1 and sys.argv[1]:
-  data_override=True
+data_override=True if (len(sys.argv)>1 and sys.argv[1].lower() == 'true') else False
+
 
 ## Loading and storing data
 start_time=time.time()
@@ -19,8 +19,6 @@ print(f"Stored data in {np.round(time.time()-start_time,2)}s")
 start_time=time.time()
 data, agent_types=loadData()
 print(f"Loaded data in {np.round(time.time()-start_time,2)}s")
-
-# setAgentTypes(['bulker', 'container ship', 'cruise' 'car carrier'])
 
 ## Average journey time
 start_time=time.time()
@@ -60,26 +58,15 @@ axes_dist=[]
 counter=0
 for agent_type in avg_neigh_count_data:
   if len(avg_neigh_count_data)>0:
-    # fig.add_subplot(gs[counter, -1])
-    # axes_count.append(fig.add_subplot(1, 1,(counter,counter%2)))
-    # axes_count[counter].plot(avg_neigh_count_data[agent_type], label=agent_types[agent_type], color=colours[agent_type])
-    # axes_count[counter].set_ylabel("Average number of neighbours")
-    # axes_count[counter].set_title(agent_types[agent_type])
-    # axes_count.append(fig.add_subplot(1, 1,(counter,counter%2)))
     axes[int(counter/2),counter%2].plot(avg_neigh_count_data[agent_type], label=agent_types[agent_type], color=colours[agent_type])
     axes[int(counter/2),counter%2].set_ylabel("Avg num")
     axes[int(counter/2),counter%2].set_title(agent_types[agent_type])
     if int(counter/2)!=int(len(avg_neigh_count_data)/2):
       axes[int(counter/2),counter%2].set_xticklabels("")
 
-    # axes_dist.append(axes_count[-1].twinx())
-    # axes_dist[counter].plot(avg_neigh_dist_data[agent_type], label=agent_types[agent_type], linestyle='--', color=colours[agent_type])
-    # axes_dist[counter].set_ylabel("Average distance of neighbours")
     axes_dist.append(axes[int(counter/2),counter%2].twinx())
     axes_dist[counter].plot(avg_neigh_dist_data[agent_type], label=agent_types[agent_type], linestyle='--', color=colours[agent_type])
     axes_dist[counter].set_ylabel("Avg dist")
-    # axes_count[-1].set_ylabel("Average distance of neighbours")
-# axes_count[0].legend()
     counter+=1
 
 ## Number of collisions/near misses
